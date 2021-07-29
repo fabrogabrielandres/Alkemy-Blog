@@ -1,9 +1,8 @@
 import React from 'react';
-import { Formik, Form } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ReactHtmlParser from 'react-html-parser';
 
 import {
   Container,
@@ -25,23 +24,16 @@ const EditSchema = Yup.object().shape({
 
 const FormEditData = () => {
 
-  const sendDataForEdit = async (e, values) => {
-    e.preventDefault();
-
-    /*
+  const sendValues = (values) => {
+    console.log(values);
+    /* 
     try{
-      const sendData = await axios.'Insertar método'()
-    }catch (error){
+      insert method here
+    }catch ( error) {
       console.log(error)
     }
-
     */
-    console.log(values)
 
-  }
-
-  const handleChangeCk = (event, editor) => {
-    console.log(editor.getData());
   }
 
   return (
@@ -58,7 +50,7 @@ const FormEditData = () => {
         }}
         validationSchema={EditSchema}
         validateOnSubmit
-        onSubmit={(values) => { sendDataForEdit(values) }}
+        onSubmit={sendValues}
       >
         {({ handleSubmit, handleChange, values, errors }) => (
           <Form onSubmit={handleSubmit}>
@@ -67,13 +59,13 @@ const FormEditData = () => {
                 <FormLabel>Nombre</FormLabel>
                 <Input
                   type='text'
-                  variant="flushed"
-                  placeholder="Nombre"
+                  placeholder="Ingrese el nombre"
                   name='name'
                   value={values.name}
                   onChange={handleChange('name')}
                 />
-                {errors.name && console.log(errors.name)}
+                {console.log(values)}
+                {/* errors.name && console.log(errors.name) */}
                 <FormLabel>Imagen</FormLabel>
                 <Input
                   type='file'
@@ -82,27 +74,23 @@ const FormEditData = () => {
                   value={values.logo}
                   onChange={handleChange('logo')}
                 />
-                {errors.logo && console.log(errors.logl)}
+                {/* errors.logo && console.log(errors.logl) */}
                 <FormLabel>Descripción corta</FormLabel>
-                {/*
-                <Input
-                  type='text'
-                  placeholder="Ingrese una descripción corta"
-                  name='shortDescription'
-                  value={values.shortDescription}
-                  onChange={ContentEditor}
-                />
-                   */}
-                {<CKEditor
-                  editor={ClassicEditor}
-                  data={values.shortDescription}
-                  onReady={(editor) => {
-                    console.log("Editor is ready to use!", editor);
-                  }}
-                  onChange={handleChangeCk}
-                />}
+                <Field name="shortDescription">
+                  {({ field, form }) => (
+                    <>
+                      <CKEditor
+                        editor={ClassicEditor}
+                        data={field.value}
+                        onChange={(event, editor) => {
+                          form.setFieldValue(field.name, editor.getData());
+                        }}
+                      />
+                    </>
+                  )}
+                </Field>
 
-                {errors.shortDescription && console.log(errors.shortDescription)}
+                {/* errors.shortDescription && console.log(errors.shortDescription) */}
                 <FormLabel>Descripción Larga</FormLabel>
                 <Input
                   type='text'
@@ -112,7 +100,7 @@ const FormEditData = () => {
                   value={values.longDescription}
                   onChange={handleChange('longDescription')}
                 />
-                {errors.longDescription && console.log(errors.longDescription)}
+                {/* errors.longDescription && console.log(errors.longDescription) */}
                 <FormLabel>Url Facebook</FormLabel>
                 <Input
                   type='text'
@@ -122,7 +110,7 @@ const FormEditData = () => {
                   value={values.facebook}
                   onChange={handleChange('facebook')}
                 />
-                {errors.facebook && console.log(errors.facebook)}
+                {/* errors.facebook && console.log(errors.facebook) */}
                 <FormLabel>Url Twitter</FormLabel>
                 <Input
                   type='text'
@@ -132,7 +120,7 @@ const FormEditData = () => {
                   value={values.twitter}
                   onChange={handleChange('twitter')}
                 />
-                {errors.twitter && console.log(errors.twitter)}
+                {/* errors.twitter && console.log(errors.twitter) */}
                 <FormLabel>Url Instagram</FormLabel>
                 <Input
                   type='text'
@@ -142,7 +130,7 @@ const FormEditData = () => {
                   value={values.instagram}
                   onChange={handleChange('instagram')}
                 />
-                {errors.instagram && console.log(errors.instagram)}
+                {/* errors.instagram && console.log(errors.instagram) */}
 
                 <Button type='submit'>Guardar</Button>
               </SimpleGrid>
@@ -155,30 +143,3 @@ const FormEditData = () => {
 }
 
 export default FormEditData;
-
-
-
-/*
-                <div className="col-sm-10 signator-textarea">
-                  <CKEditor
-                    id="inputText"
-                    className="inputText"
-                    editor={ClassicEditor}
-                    onChange={handleChange('shortDescription')}
-                  />
-                  <p className="image-size-ratio">Signator text must be within 4 lines!</p>
-                  <ErrorMessage name="signator_text" />
-                  <p id="error_enter_count"></p>
-                </div>
-*/
-
-/*
-                 <Input
-                  type='text'
-                  variant="flushed"
-                  placeholder="Agrege una descripcion corta"
-                  name='shortDescription'
-                  value={values.shortDescription}
-                  onChange={handleChange('shortDescription')}
-                />
- */
