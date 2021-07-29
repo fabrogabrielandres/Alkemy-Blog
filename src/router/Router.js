@@ -4,6 +4,7 @@ import { Counter } from "../features/counter/Counter";
 import { Backoffice } from '../pages/backoffice/Backoffice';
 // Redux logo
 import logo from '../logo.svg';
+import FormEditData from '../pages/backoffice/organization/edit/FormEditData';
 
 const Router = () => {
   return (
@@ -56,8 +57,11 @@ const Router = () => {
             </span>
           </header>
         </Route>
-        <Route path="/backoffice">
+        <Route path="/backoffice" exact>
           <Backoffice />
+        </Route>
+        <Route path="/backoffice/organization/edit">
+          <FormEditData />
         </Route>
       </Switch>
     </BrowserRouter>
