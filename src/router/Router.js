@@ -4,7 +4,7 @@ import { Counter } from "../features/counter/Counter";
 import { Backoffice } from '../pages/backoffice/Backoffice';
 // Redux logo
 import logo from '../logo.svg';
-import FormEditData from '../pages/backoffice/organization/edit/FormEditData';
+import FormEditData from '../pages/backoffice/organization/edit';
 
 const Router = () => {
   return (
