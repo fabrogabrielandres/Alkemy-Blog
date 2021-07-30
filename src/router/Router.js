@@ -5,6 +5,7 @@ import { Backoffice } from '../pages/backoffice/Backoffice';
 // Redux logo
 import logo from '../logo.svg';
 import FormEditData from '../pages/backoffice/organization/edit';
+import DataOrganization from '../pages/backoffice/organization';
 
 const Router = () => {
   return (
@@ -60,7 +61,10 @@ const Router = () => {
         <Route path="/backoffice" exact>
           <Backoffice />
         </Route>
-        <Route path="/backoffice/organization/edit">
+        <Route path='/backoffice/organization' exact>
+          <DataOrganization />
+        </Route>
+        <Route path='/backoffice/organization/edit'>
           <FormEditData />
         </Route>
       </Switch>
