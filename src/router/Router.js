@@ -6,6 +6,7 @@ import { Backoffice } from '../pages/backoffice/Backoffice';
 import logo from '../logo.svg';
 import FormEditData from '../pages/backoffice/organization/edit';
 import DataOrganization from '../pages/backoffice/organization';
+import Detail from '../Components/Activities/Detail';
 
 const Router = () => {
   return (
@@ -66,6 +67,9 @@ const Router = () => {
         </Route>
         <Route path='/backoffice/organization/edit'>
           <FormEditData />
+        </Route>
+        <Route path="/actividades/:id">
+          <Detail content='propsContentHere' />
         </Route>
       </Switch>
     </BrowserRouter>
