@@ -1,8 +1,7 @@
-import React from 'react';
+import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { Counter } from "../features/counter/Counter";
-import { Backoffice } from '../pages/backoffice/Backoffice';
-// Redux logo
+import { Backoffice } from "../pages/backoffice/Backoffice";
+import SlidesForm from "../Components/Slides/SlidesForm";
 import logo from '../logo.svg';
 import FormEditData from '../pages/backoffice/organization/edit';
 import DataOrganization from '../pages/backoffice/organization';
@@ -15,7 +14,6 @@ const Router = () => {
         <Route exact path="/">
           <header className="App-header">
             <img src={logo} className="App-logo" alt="logo" />
-            <Counter />
             <p>
               Edit <code>src/App.js</code> and save to reload.
             </p>
@@ -68,12 +66,14 @@ const Router = () => {
         <Route path='/backoffice/organization/edit'>
           <FormEditData />
         </Route>
+        <Route exact path="/backoffice/slides/create" component={SlidesForm} />
+        <Route exact path="/backoffice/slides/:id" component={SlidesForm} />
         <Route path="/actividades/:id">
           <Detail content='propsContentHere' />
         </Route>
       </Switch>
     </BrowserRouter>
-  )
-}
+  );
+};
 
 export default Router;

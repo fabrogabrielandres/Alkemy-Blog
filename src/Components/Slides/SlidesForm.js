@@ -1,32 +1,93 @@
-import React, { useState } from 'react';
-import '../FormStyles.css';
+import React, { useState, useEffect } from "react";
+import "../FormStyles.css";
+import FormSlides from "./Form";
+import axios from "axios";
 
-const SlidesForm = () => {
-    const [initialValues, setInitialValues] = useState({
-        name: '',
-        description: ''
-    });
+const SlidesForm = ({ match }) => {
+  const [data, setData] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [exito, setExito] = useState(false);
+  const [carga, setCarga] = useState(false);
+  const [error, setError] = useState(null);
 
-    const handleChange = (e) => {
-        if(e.target.name === 'name'){
-            setInitialValues({...initialValues, name: e.target.value})
-        } if(e.target.name === 'description'){
-            setInitialValues({...initialValues, description: e.target.value})
-        }
+  useEffect(() => {
+    setLoading(true);
+    if (match.params.id) {
+      axios(`http://ongapi.alkemy.org/api/slides/${match.params.id}`)
+        .then((res) => {
+          setData({
+            nombre: res.data.data.name,
+            descripcion: res.data.data.description,
+            imagen: res.data.data.image,
+            order: res.data.data.order,
+          });
+          setLoading(false);
+          setCarga(true);
+        })
+        .catch((error) => {
+          setError("Error: El id de Slide recibido no existe");
+          setLoading(false);
+        });
+    } else {
+      setData({
+        nombre: "",
+        descripcion: "",
+        imagen: "",
+        order: "",
+      });
+      setLoading(false);
+      setCarga(true);
     }
+  }, [match]);
 
-    const handleSubmit = (e) =>{
-        e.preventDefault();
-        console.log(initialValues);
+  const handleSubmit = async (values) => {
+     const json = {
+      image: Buffer.from(String(values.imagen.name)).toString("base64"),
+      name: values.nombre,
+      description: values.descripcion,
+      order: values.order
+      }
+    const create = (slide) =>
+      axios.post("http://ongapi.alkemy.org/api/slides#t53", slide);
+    const update = (slide) =>
+      axios.put(
+        `http://ongapi.alkemy.org/api/slides/${match.params.id}#t53`,
+        slide
+      );
+    try {
+      const res = match.params.id ? await update(json) : await create(json);
+      console.log(res);
+      if (match.params.id) {
+        setExito("El Slide fue actualizado exitosamente");
+      } else {
+        setExito("El Slide fue creado exitosamente");
+      }
+    } catch (error) {
+      setError("Hubo un error al conectar con el servidor");
     }
+  };
 
-    return (
-        <form className="form-container" onSubmit={handleSubmit}>
-            <input className="input-field" type="text" name="name" value={initialValues.name} onChange={handleChange} placeholder="Slide Title"></input>
-            <input className="input-field" type="text" name="description" value={initialValues.description} onChange={handleChange} placeholder="Write the description"></input>
-            <button className="submit-btn" type="submit">Send</button>
-        </form>
-    );
-}
- 
+  return (
+    <div>
+      {exito && <h4 style={{ textAlign: "center" }}>{exito}</h4>}
+      {error && <h4 style={{ textAlign: "center" }}>{error}</h4>}
+      {loading && !carga && (
+        <h4 style={{ textAlign: "center" }}>Cargando...</h4>
+      )}
+      {!loading && carga && (
+        <div>
+          <h4>{match.params.id ? "Editar Slide" : "Crear Slide"}</h4>
+          <FormSlides
+            nombre={data.nombre}
+            descripcion={data.descripcion}
+            imagen={data.imagen}
+            order={data.order}
+            handleOnSubmit={handleSubmit}
+          />
+        </div>
+      )}
+    </div>
+  );
+};
+
 export default SlidesForm;
