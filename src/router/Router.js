@@ -1,17 +1,14 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { Backoffice } from "../pages/backoffice/Backoffice";
+import { NewsForm } from "../Components/News/NewsForm";
 import SlidesForm from "../Components/Slides/SlidesForm";
 import logo from '../logo.svg';
 import FormEditData from '../pages/backoffice/organization/edit';
 import DataOrganization from '../pages/backoffice/organization';
 import Detail from '../Components/Activities/Detail';
 
-const Router = () => {
-  return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/">
+const ReduxDefaultComponent = () => (
           <header className="App-header">
             <img src={logo} className="App-logo" alt="logo" />
             <p>
@@ -56,21 +53,22 @@ const Router = () => {
               </a>
             </span>
           </header>
-        </Route>
-        <Route path="/backoffice" exact>
-          <Backoffice />
-        </Route>
-        <Route path='/backoffice/organization' exact>
-          <DataOrganization />
-        </Route>
-        <Route path='/backoffice/organization/edit'>
-          <FormEditData />
-        </Route>
+)
+
+const Router = () => {
+  const news = {id: "261", category_id: "93", user_id: "",name:"Prueba editar", content:"<ul><li>Contenido de prueba</li></ul>", image : "https://via.placeholder.com/600/f66b97"}
+  return (
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={ReduxDefaultComponent}/>
+        <Route exact path="/backoffice" component={Backoffice} />
+        <Route exact path="/backoffice/organization" component={DataOrganization} />
+        <Route exact path="/backoffice/organization/edit" component={FormEditData} />
         <Route exact path="/backoffice/slides/create" component={SlidesForm} />
         <Route exact path="/backoffice/slides/:id" component={SlidesForm} />
-        <Route path="/actividades/:id">
-          <Detail content='propsContentHere' />
-        </Route>
+        <Route exact path="/backoffice/news/create" component={NewsForm} />
+        <Route exact path="/backoffice/news/edit/:id" component={ () => <NewsForm  {...news} />} />
+        <Route exact path="/actividades/:id" component={() => <Detail content="propsContentHere"/>}/>
       </Switch>
     </BrowserRouter>
   );
