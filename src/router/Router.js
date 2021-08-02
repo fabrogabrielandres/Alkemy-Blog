@@ -7,7 +7,6 @@ import logo from '../logo.svg';
 import FormEditData from '../pages/backoffice/organization/edit';
 import DataOrganization from '../pages/backoffice/organization';
 import Detail from '../Components/Activities/Detail';
-import { LoginForm } from "../Components/Auth/LoginForm";
 
 const ReduxDefaultComponent = () => (
           <header className="App-header">
@@ -61,7 +60,6 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/login" component={LoginForm} />
         <Route exact path="/" component={ReduxDefaultComponent}/>
         <Route exact path="/backoffice" component={Backoffice} />
         <Route exact path="/backoffice/organization" component={DataOrganization} />
