@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { Backoffice } from "../pages/backoffice/Backoffice";
 import { NewsForm } from "../Components/News/NewsForm";
+import { MembersForm } from "../Components/Memebers/MembersForm";
 import SlidesForm from "../Components/Slides/SlidesForm";
 import logo from '../logo.svg';
 import FormEditData from '../pages/backoffice/organization/edit';
@@ -58,7 +59,6 @@ const ReduxDefaultComponent = () => (
 )
 
 const Router = () => {
-  const news = { id: "261", category_id: "93", user_id: "", name: "Prueba editar", content: "<ul><li>Contenido de prueba</li></ul>", image: "https://via.placeholder.com/600/f66b97" }
   return (
     <BrowserRouter>
       <Switch>
@@ -71,8 +71,10 @@ const Router = () => {
         <Route exact path="/backoffice/slides/create" component={SlidesForm} />
         <Route exact path="/backoffice/slides/:id" component={SlidesForm} />
         <Route exact path="/backoffice/news/create" component={NewsForm} />
-        <Route exact path="/backoffice/news/edit/:id" component={() => <NewsForm  {...news} />} />
-        <Route exact path="/actividades/:id" component={() => <Detail content="propsContentHere" />} />
+        <Route exact path="/backoffice/news/edit/:id" component={ (news) => <NewsForm  {...news} />} />
+        <Route exact path="/backoffice/members/create" component={MembersForm} />
+        <Route exact path="/backoffice/members/edit/:id" component={(member) => <MembersForm {...member} />} />
+        <Route exact path="/actividades/:id" component={() => <Detail content="propsContentHere"/>}/>
       </Switch>
       <Footer />
     </BrowserRouter>
