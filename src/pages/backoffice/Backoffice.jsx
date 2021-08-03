@@ -1,9 +1,13 @@
-import React from 'react'
+import React from 'react';
+import {
+  Flex,
+  Heading
+} from '@chakra-ui/react';
 
 export const Backoffice = () => {
   return (
-    <div>
-      <h1>Hola mundo</h1>
-    </div>
+    <Flex direction="column" alignItems="center" w="100%">
+      <Heading as="h2" size="2xl" my="12">Hola Mundo</Heading>
+    </Flex>
   )
 }
