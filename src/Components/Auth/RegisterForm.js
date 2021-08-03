@@ -1,33 +1,71 @@
-import React, { useState } from 'react';
-import '../FormStyles.css';
+import { Box, Button, Container, Input, Text } from '@chakra-ui/react'
+import { ErrorMessage, Field, Form, Formik } from 'formik'
+import React from 'react';
+import * as Yup from "yup"
 
-const RegisterForm = () => {
-    const [initialValues, setInitialValues] = useState({
-        name: '',
-        lastName: ''
-    })
-    
-    const handleChange = (e) => {
-        if(e.target.name === 'name'){
-            setInitialValues({...initialValues, name: e.target.value})
-        } if(e.target.name === 'lastName'){
-            setInitialValues({...initialValues, lastName: e.target.value})
-        }
-    }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(initialValues);
-        localStorage.setItem('token', 'tokenValueExample')
-    }
+const schemaRegister = Yup.object().shape({
+    email: Yup.string().email("Formato email invalido").required("Requerido"),
+    password: Yup.string().min(6, "Faltan caracteres").required("Requerido")
+        .matches(/^(?=.*[A-Za-z])(?=.*?[0-9])(?=.*?[°!"#$%&/()=?¡;:_,.:-])/, "contraseña incorrecta"),
+    confirmPassword: Yup.string()
+        .required()
+        .oneOf([Yup.ref("password"), null], "Passwords no son iguales")
+})
+
+export const RegisterForm = () => {
+    const initialValues = { email: "", password: "",confirmPassword:"" }
+    let user = { email: "", password: "" }
 
     return (
-        <form className="form-container" onSubmit={handleSubmit}>
-            <input className="input-field" type="text" name="name" value={initialValues.name} onChange={handleChange} placeholder="Enter name"></input>
-            <input className="input-field" type="text" name="lastName" value={initialValues.lastName} onChange={handleChange} placeholder="Enter last name"></input>
-            <button className="submit-btn" type="submit">Register</button>
-        </form>
-    );
+        <Container mt={10}>
+            <Formik
+                initialValues={initialValues}
+                validationSchema={schemaRegister}
+                onSubmit={( {email, password  } ) => {
+                     
+                    user={email,password}
+                    console.log(user);
+                }
+                }
+
+            >
+                {
+                    (props) => (
+                        <Form>
+                            <Box>
+                                <Text>Email</Text>
+                                <Field name="email">
+                                    {({ field }) => (
+                                        <Input {...field} id="email" placeholder="email" />
+                                    )}
+                                </Field>
+                                <ErrorMessage name="email">{(message) => <Text>{message}</Text>}</ErrorMessage>
+                            </Box>
+                            <Box>
+                                <Text>Passoword</Text>
+                                <Field name="password">
+                                    {({ field }) =>
+                                        <Input {...field} id="password" placeholder="passoword" />
+                                    }</Field>
+                                <ErrorMessage name="password">{(message) => <Text>{message}</Text>}</ErrorMessage>
+
+                            </Box>
+                            <Box>
+                                <Text>Confirmar Password</Text>
+                                <Field name="confirmPassword">
+                                    {({ field }) =>
+                                        <Input {...field} id="confirmPassword" placeholder="confirmPassword" />
+                                    }</Field>
+                                <ErrorMessage name="confirmPassword">{(message) => <Text>{message}</Text>}</ErrorMessage>
+                                <Box mt={7}>
+                                    <Button type="submit" colorScheme="pink">Resgistrar</Button>
+                                </Box>
+                            </Box>
+                        </Form>
+                    )
+                }
+            </Formik>
+        </Container>
+    )
 }
- 
-export default RegisterForm;
