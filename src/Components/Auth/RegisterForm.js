@@ -46,7 +46,7 @@ export const RegisterForm = () => {
                                 <Text>Passoword</Text>
                                 <Field name="password">
                                     {({ field }) =>
-                                        <Input {...field} id="password" placeholder="passoword" />
+                                        <Input {...field} id="password" type="password" placeholder="passoword" />
                                     }</Field>
                                 <ErrorMessage name="password">{(message) => <Text>{message}</Text>}</ErrorMessage>
 
@@ -55,7 +55,7 @@ export const RegisterForm = () => {
                                 <Text>Confirmar Password</Text>
                                 <Field name="confirmPassword">
                                     {({ field }) =>
-                                        <Input {...field} id="confirmPassword" placeholder="confirmPassword" />
+                                        <Input {...field} id="confirmPassword" type="password" placeholder="confirmPassword" />
                                     }</Field>
                                 <ErrorMessage name="confirmPassword">{(message) => <Text>{message}</Text>}</ErrorMessage>
                                 <Box mt={7}>
