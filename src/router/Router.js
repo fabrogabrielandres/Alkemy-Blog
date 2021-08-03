@@ -8,6 +8,7 @@ import FormEditData from '../pages/backoffice/organization/edit';
 import { ActivitiesForm } from '../Components/Activities/ActivitiesForm';
 import DataOrganization from '../pages/backoffice/organization';
 import Detail from '../Components/Activities/Detail';
+import Footer from "../Components/Footer/Footer";
 
 const ReduxDefaultComponent = () => (
   <header className="App-header">
@@ -73,6 +74,7 @@ const Router = () => {
         <Route exact path="/backoffice/news/edit/:id" component={() => <NewsForm  {...news} />} />
         <Route exact path="/actividades/:id" component={() => <Detail content="propsContentHere" />} />
       </Switch>
+      <Footer />
     </BrowserRouter>
   );
 };
