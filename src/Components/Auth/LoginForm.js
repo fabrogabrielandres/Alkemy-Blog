@@ -1,33 +1,56 @@
-import React, { useState } from 'react';
-import '../FormStyles.css';
+import { Box, Button, Container, Input, Text } from '@chakra-ui/react'
+import { ErrorMessage, Field, Form, Formik } from 'formik'
+import React from 'react';
+import * as Yup from "yup"
 
-const LoginForm = () => {
-    const [initialValues, setInitialValues] = useState({
-        email: '',
-        password: ''
-    });
 
-    const handleChange = (e) => {
-        if(e.target.name === 'email'){
-            setInitialValues({...initialValues, email: e.target.value})
-        } if(e.target.name === 'password'){
-            setInitialValues({...initialValues, password: e.target.value})
-        }
-    }
-    
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(initialValues);
-        localStorage.setItem('token', 'tokenValueExample')
-    }
+const schemaLogin = Yup.object().shape({
+    email: Yup.string().email("Formato email invalido").required("Requerido"),
+    password: Yup.string().min(6, "Faltan caracteres").required("Requerido")
+.matches(/^(?=.*[A-Za-z])(?=.*?[0-9])(?=.*?[°!"#$%&/()=?¡;:_,.:-])/, "contraseña incorrecta")
+})
+
+export const LoginForm = () => {
+    const initialValues = { email: "", password: "" }
+    let user = { email: "", password: "" }
 
     return (
-        <form className="form-container" onSubmit={handleSubmit}>
-            <input className="input-field" type="text" name="email" value={initialValues.name} onChange={handleChange} placeholder="Enter email"></input>
-            <input className="input-field" type="text" name="password" value={initialValues.password} onChange={handleChange} placeholder="Enter password"></input>
-            <button className="submit-btn" type="submit">Log In</button>
-        </form>
-    );
+        <Container mt={10}>
+            <Formik
+                initialValues={initialValues}
+                validationSchema={schemaLogin}
+                onSubmit={(values) => {
+                    user = { ...values }
+                    console.log(user);
+                }
+                }
+
+            >
+                {
+                    (props) => (
+                        <Form>
+                            <Box>
+                                <Text>Email</Text>
+                                <Field name="email">
+                                    {({ field }) => (
+                                        <Input {...field} id="email" placeholder="email" />
+                                    )}
+                                </Field>
+                                <ErrorMessage name="email">{(message) => <Text>{message}</Text>}</ErrorMessage>
+                            </Box>
+                            <Box>
+                                <Text>Passoword</Text>
+                                <Field name="password">
+                                    {({ field }) =>
+                                        <Input {...field} id="password" type="password" placeholder="passoword" />
+                                    }</Field>
+                                <ErrorMessage name="password">{(message) => <Text>{message}</Text>}</ErrorMessage>
+                                <Button type="submit" colorScheme="pink">Login</Button>
+                            </Box>
+                        </Form>
+                    )
+                }
+            </Formik>
+        </Container>
+    )
 }
- 
-export default LoginForm;
