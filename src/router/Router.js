@@ -11,6 +11,7 @@ import { ActivitiesForm } from '../Components/Activities/ActivitiesForm';
 import DataOrganization from '../pages/backoffice/organization';
 import Detail from '../Components/Activities/Detail';
 import Footer from "../Components/Footer/Footer";
+import About from "../Components/About";
 
 const ReduxDefaultComponent = () => (
   <header className="App-header">
@@ -77,6 +78,7 @@ const Router = () => {
         <Route exact path="/novedades/:id" component={() => <NewsDetail title="Detalle de novedad" />} />
         <Route exact path="/backoffice/members/create" component={MembersForm} />
         <Route exact path="/backoffice/members/edit/:id" component={(member) => <MembersForm {...member} />} />
+        <Route exact path='/nosotros' component={About} />
       </Switch>
       <Footer />
     </BrowserRouter>
