@@ -6,8 +6,8 @@ import { yupSchema as membersYupSchema } from "./yupSchema";
 import { FormField as Field } from "./FormField";
 import { Button, Input, Text, Flex, Image } from "@chakra-ui/react";
 import { MembersCKEditor } from "./MembersCKEditor";
-import { dataToBase64String } from "./../News/dataToBase64String";
-import { GROUP_CODE, API_BASE_URL } from "./../../common/configurations";
+import { dataToBase64String } from "../News/dataToBase64String";
+import { GROUP_CODE, API_BASE_URL } from "../../common/configurations";
 export const MembersForm = ({
   name = "",
   description = "",

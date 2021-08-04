@@ -1,0 +1,44 @@
+import * as React from "react";
+import { Stack, Skeleton } from "@chakra-ui/react";
+import axios from "axios";
+import { API_BASE_URL } from "../../common/configurations";
+import { GenericList } from "../common/GenericList";
+const getMembersListHandler = async (setMembersResponse) => {
+  const MEMBERS_LIST_URL = API_BASE_URL + "/members#t53";
+  let data = undefined;
+  try {
+    const response = await axios.get(MEMBERS_LIST_URL);
+    data = response.data;
+  } catch (exception) {
+    console.log(exception);
+    data = exception.response.data;
+  }
+  setMembersResponse(data);
+};
+export const MembersList = () => {
+  const undefinedResponse = {
+    success: undefined,
+    data: undefined,
+    errors: undefined,
+    message: "Petición en proceso",
+  };
+  const [membersResponse, setMembersResponse] =
+    React.useState(undefinedResponse);
+  React.useEffect(() => {
+    getMembersListHandler(setMembersResponse);
+  }, []);
+  return membersResponse.success ? (
+    <GenericList
+      excludeFields={["description", "group_id"]}
+      data={membersResponse.data}
+      caption={"Members List"}
+      endpoint="members"
+    />
+  ) : (
+    <Stack p="2%">
+      <Skeleton height="20px" />
+      <Skeleton height="20px" />
+      <Skeleton height="20px" />
+    </Stack>
+  );
+};
