@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { Backoffice } from "../pages/backoffice/Backoffice";
+import { Home } from "../pages/backoffice/home";
 import { NewsForm } from "../Components/News/NewsForm";
 import NewsDetail from '../Components/News/Detail';
 import { MembersForm } from "../Components/Memebers/MembersForm";
@@ -65,7 +65,7 @@ const Router = () => {
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={ReduxDefaultComponent} />
-        <Route exact path="/backoffice" component={Backoffice} />
+        <Route exact path="/backoffice/home" component={Home} />
         <Route exact path="/backoffice/activities/create" component={ActivitiesForm} />
         <Route exact path="/backoffice/activities/edit/:id" component={ActivitiesForm} />
         <Route exact path="/backoffice/organization" component={DataOrganization} />
