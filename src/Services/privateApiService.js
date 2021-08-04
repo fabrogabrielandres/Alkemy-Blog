@@ -1,15 +1,28 @@
-import axios from 'axios';
+// import axios from 'axios';
 
-const config = {
+const getLocalStorageToken = () => {
+  return {
     headers: {
-        Group: 01                //Aqui va el ID del equipo!!
+      'Authorization': localStorage.token ? `Bearer ${localStorage.token}` : ''
     }
+  }
 }
 
-const Get = () => {
-    axios.get('https://jsonplaceholder.typicode.com/users', config)
+// Dejo comentado porque tengo que seguir construyendo esta funcion 
+// en mi proximo ticket
+export const Get = () => {
+  console.log(getLocalStorageToken());
+  /*
+  axios.get('https://jsonplaceholder.typicode.com/users', config)
     .then(res => console.log(res))
     .catch(err => console.log(err))
+  */
 }
 
-export default Get
+/*
+const config = {
+  headers: {
+    Group: 01                //Aqui va el ID del equipo!!
+  }
+}
+*/
