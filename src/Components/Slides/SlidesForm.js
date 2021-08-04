@@ -3,7 +3,8 @@ import "../FormStyles.css";
 import FormSlides from "./Form";
 import axios from "axios";
 
-const SlidesForm = ({ match }) => {
+const SlidesForm = ({ match, setCallToForm }) => {
+  console.log(match)
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
   const [exito, setExito] = useState(false);
@@ -12,8 +13,8 @@ const SlidesForm = ({ match }) => {
 
   useEffect(() => {
     setLoading(true);
-    if (match.params.id) {
-      axios(`http://ongapi.alkemy.org/api/slides/${match.params.id}`)
+    if (match.id) {
+      axios(`http://ongapi.alkemy.org/api/slides/${match.id}`)
         .then((res) => {
           setData({
             nombre: res.data.data.name,
@@ -51,16 +52,24 @@ const SlidesForm = ({ match }) => {
       axios.post("http://ongapi.alkemy.org/api/slides#t53", slide);
     const update = (slide) =>
       axios.put(
-        `http://ongapi.alkemy.org/api/slides/${match.params.id}#t53`,
+        `http://ongapi.alkemy.org/api/slides/${match.id}#t53`,
         slide
       );
     try {
-      const res = match.params.id ? await update(json) : await create(json);
+      const res = match.id ? await update(json) : await create(json);
       console.log(res);
-      if (match.params.id) {
+      if (match.id) {
         setExito("El Slide fue actualizado exitosamente");
+        setTimeout(() => {
+          setCallToForm(false);
+
+        }, 3000)
       } else {
         setExito("El Slide fue creado exitosamente");
+        setTimeout(() => {
+          setCallToForm(false);
+
+        }, 3000)
       }
     } catch (error) {
       setError("Hubo un error al conectar con el servidor");
@@ -76,7 +85,7 @@ const SlidesForm = ({ match }) => {
       )}
       {!loading && carga && (
         <div>
-          <h4>{match.params.id ? "Editar Slide" : "Crear Slide"}</h4>
+          <h4>{match.id ? "Editar Slide" : "Crear Slide"}</h4>
           <FormSlides
             nombre={data.nombre}
             descripcion={data.descripcion}

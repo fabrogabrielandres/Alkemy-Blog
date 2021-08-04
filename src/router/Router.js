@@ -1,7 +1,8 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { Backoffice } from "../pages/backoffice/Backoffice";
+import { Home } from "../pages/backoffice/home";
 import { NewsForm } from "../Components/News/NewsForm";
+import NewsDetail from '../Components/News/Detail';
 import { MembersForm } from "../Components/Memebers/MembersForm";
 import SlidesForm from "../Components/Slides/SlidesForm";
 import logo from '../logo.svg';
@@ -10,6 +11,7 @@ import { ActivitiesForm } from '../Components/Activities/ActivitiesForm';
 import DataOrganization from '../pages/backoffice/organization';
 import Detail from '../Components/Activities/Detail';
 import Footer from "../Components/Footer/Footer";
+import About from "../Components/About";
 
 const ReduxDefaultComponent = () => (
   <header className="App-header">
@@ -63,7 +65,7 @@ const Router = () => {
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={ReduxDefaultComponent} />
-        <Route exact path="/backoffice" component={Backoffice} />
+        <Route exact path="/backoffice/home" component={Home} />
         <Route exact path="/backoffice/activities/create" component={ActivitiesForm} />
         <Route exact path="/backoffice/activities/edit/:id" component={ActivitiesForm} />
         <Route exact path="/backoffice/organization" component={DataOrganization} />
@@ -71,10 +73,12 @@ const Router = () => {
         <Route exact path="/backoffice/slides/create" component={SlidesForm} />
         <Route exact path="/backoffice/slides/:id" component={SlidesForm} />
         <Route exact path="/backoffice/news/create" component={NewsForm} />
-        <Route exact path="/backoffice/news/edit/:id" component={ (news) => <NewsForm  {...news} />} />
+        <Route exact path="/backoffice/news/edit/:id" component={ () => <NewsForm  {...news} />} />
+        <Route exact path="/actividades/:id" component={() => <Detail content="propsContentHere"/>}/>
+        <Route exact path="/novedades/:id" component={() => <NewsDetail title="Detalle de novedad" />} />
         <Route exact path="/backoffice/members/create" component={MembersForm} />
         <Route exact path="/backoffice/members/edit/:id" component={(member) => <MembersForm {...member} />} />
-        <Route exact path="/actividades/:id" component={() => <Detail content="propsContentHere"/>}/>
+        <Route exact path='/nosotros' component={About} />
       </Switch>
       <Footer />
     </BrowserRouter>
