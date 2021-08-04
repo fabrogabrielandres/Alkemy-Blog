@@ -1,28 +1,38 @@
 // import axios from 'axios';
 
+// Function que obtiene el token del localStorage.
 const getLocalStorageToken = () => {
   return {
     headers: {
-      'Authorization': localStorage.token ? `Bearer ${localStorage.token}` : ''
+      'Authorization': localStorage.token ? `Bearer ${localStorage.token}` : '',
+      "Content-Type": "application/json",
+      'accept': 'application/json'
     }
   }
 }
 
-// Dejo comentado porque tengo que seguir construyendo esta funcion 
-// en mi proximo ticket
-export const Get = () => {
-  console.log(getLocalStorageToken());
-  /*
-  axios.get('https://jsonplaceholder.typicode.com/users', config)
-    .then(res => console.log(res))
-    .catch(err => console.log(err))
-  */
+// Function que construye la URL.
+const getURL = (URL, id) => {
+  return `${URL}${id !== null ? '/' + String(id) : ''}`
+}
+
+// Function que realiza la peticion GET
+export const privateApiGet = async (URL, id = null) => {
+  try {
+    const response = await axios.get(getURL(URL, id), getLocalStorageToken());
+    return response;
+  } catch (error) {
+    return {
+      msg: 'Error al realizar la peticion GET',
+      error
+    }
+  }
 }
 
 /*
 const config = {
-  headers: {
-    Group: 01                //Aqui va el ID del equipo!!
-  }
+    headers: {
+        Group: 01                //Aqui va el ID del equipo!!
+    }
 }
 */
