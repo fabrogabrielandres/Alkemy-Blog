@@ -6,7 +6,7 @@ import {
   Image,
   Button,
 } from '@chakra-ui/react';
-import SlidesForm from '../../../../Components/Slides/SlidesForm';
+import SlidesForm from '../../../Slides/SlidesForm';
 
 const Slides = () => {
 
@@ -45,23 +45,19 @@ const Slides = () => {
       >
         {
           allSlides.slice(0, 3).map((slides) => (
-            <>
-              <Box borderWidth="1px" borderRadius="lg" overflow="hidden" key={slides.id} mx='20px' my='10px'>
-                <Image src={slides.image} alt={slides.image} w='200px' h='100px' />
-                <Box
-                  fontWeight="semibold"
-                  as="h4"
-                  lineHeight="tight"
-                  zIndex='100px'
-                  isTruncated
-                >
-                  {slides.description}
-                </Box>
-                <Button onClick={() => goToEditSlide(slides)}>Editar</Button>
+            <Box borderWidth="1px" borderRadius="lg" overflow="hidden" key={slides.id} mx='20px' my='10px'>
+              <Image src={slides.image} alt={slides.image} w='200px' h='100px' />
+              <Box
+                fontWeight="semibold"
+                as="h4"
+                lineHeight="tight"
+                zIndex='100px'
+                isTruncated
+              >
+                {slides.description}
               </Box>
-              <Box>
-              </Box>
-            </>
+              <Button onClick={() => goToEditSlide(slides)}>Editar</Button>
+            </Box>
           ))
         }
       </Box>

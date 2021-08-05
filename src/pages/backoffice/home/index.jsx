@@ -1,14 +1,12 @@
 import React from 'react';
-import Slides from './slides'
-import TextBackofficeHome from './text';
-
-
+import Slides from '../../../Components/Backoffice/Home/slides'
+import TextBackofficeHome from '../../../Components/Backoffice/Home/text'
 
 import {
   Box
 } from '@chakra-ui/react';
 
-export const Home = () => {
+export const HomeBackoffice = () => {
 
   return (
     <>

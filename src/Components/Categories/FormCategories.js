@@ -32,11 +32,12 @@ export const FormCategories = ({ categories }) => {
                 initialValues={categories.id ? categories : initialValues}
                 validationSchema={schemaFormCreateEditCategories}
                 onSubmit={async (values) => {
-                    const img = values.image
-                    const imgbase = await convertirABase64(img)
-                    values.image = imgbase
-                    peticionPostPatchFormCategories(values)
-                }}>
+                    const img = values.image;
+                    const imgbase = await convertirABase64(img);
+                    values.image = imgbase;
+                    peticionPostPatchFormCategories(values);
+                }   }
+                >
                 {(props) => (
                     <Form>
                         <FormLabel >Name</FormLabel>
