@@ -1,30 +1,112 @@
-import React from 'react';
-import '../CardListStyles.css';
+import React, {useState, useEffect} from 'react';
+import axios from 'axios';
+//import '../CardListStyles.css';
+import {
+    Table,
+    Thead,
+    Tbody,
+    Tr,
+    Th,
+    Td,
+    Grid,
+    GridItem,
+    Button,
+    Link,
+  } from "@chakra-ui/react"
 
 const ActivitiesList = () => {
-    const activitiesMock = [
-        {id: 2, name: 'Titulo de prueba', description: 'Descripcion de prueba'},
-        {id: 1, name: 'Titulo de prueba', description: 'Descripcion de prueba'},
-        {id: 3, name: 'Titulo de prueba', description: 'Descripcion de prueba'}
-    ];
+    const [actividades, setActividades] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [exito, setExito] = useState(false);
+
+    useEffect(() => {
+        setLoading(true);
+        axios(`http://ongapi.alkemy.org/api/activities`)
+            .then((res) => {
+              setActividades(res.data.data);
+              setLoading(false);
+              setExito(true);
+            })
+            .catch((error) => {
+              setError("Ha ocurrido un error al conectar con el servidor. Intentelo de nuevo")
+              setLoading(false);
+            });
+        }, []);
+
+    function editar(id) {
+       window.location.href = `/backoffice/activities/edit/${id}`;
+    }
+
+    function eliminar(id) {
+        console.log(id);
+        // aca deberia hacer una peticion delete a la API que elimine la actividad
+    }
 
     return (
         <div>
-            <h1>Listado Actividades</h1>
-            <ul className="list-container">
-                {activitiesMock.length > 0 ?
-                    activitiesMock.map((activity) => {
-                        return(
-                            <li className="card-info" key={activity.id}>
-                                <h3>{activity.name}</h3>
-                                <p>{activity.description}</p>
-                            </li>
-                        )
-                    })
-                :
-                    <p>No hay actividades</p>
-                }
-            </ul>
+            <Grid templateColumns="repeat(5, 1fr)" gap={4}>
+                <GridItem colSpan={2} h="10"><strong>Listado de Actividades</strong></GridItem>
+                <GridItem colStart={4} colEnd={6} h="10">
+                <Link color="teal.500" href="/backoffice/activities/create">
+                    Agregar Actividad
+                </Link>
+                </GridItem>
+            </Grid>
+            {error &&
+            <div>
+             <h4 style={{ textAlign: "center" }}>{error}</h4>
+             <Button colorScheme="red" size="sm" onClick={() => window.location.href = "/backoffice/activities"}>
+                Recargar
+             </Button>
+            </div>
+            }
+            {loading && !exito && <h4 style={{ textAlign: "center" }}>Cargando...</h4>}
+            {!loading && exito && actividades.length > 0 && (
+            <Table variant="simple">
+                <Thead>
+                    <Tr>
+                        <Th>Nombre Actividad</Th>
+                        <Th>Imagen</Th>
+                        <Th>Fecha de Creacion</Th>
+                        <Th>Acciones</Th>
+                    </Tr>
+                </Thead>
+                <Tbody>
+                    {
+                        actividades.map((actividad) => {
+                            return(
+                                <Tr>
+                                    <Td>{actividad.name}</Td>
+                                    <Td>
+                                        {actividad.image === null ?
+                                          <p>Sin Imagen</p>
+                                          : 
+                                          <img alt="" src={actividad.image}
+                                            width={200} height={200}
+                                            />
+                                        }
+                                    </Td>
+                                    <Td>
+                                        {`${String(actividad.created_at).split("T")[0]
+                                        }, ${String(actividad.created_at).split("T")[1]}`}
+                                    </Td>
+                                    <Td>
+                                    <Button colorScheme="yellow" size="sm" onClick={() => editar(actividad.id)}>
+                                        Editar
+                                    </Button>
+                                    <Button colorScheme="red" size="sm" onClick={() => eliminar(actividad.id)}>
+                                        Eliminar
+                                    </Button>
+                                    </Td>
+                                </Tr>
+                            )
+                        })
+                    }
+                </Tbody>
+            </Table>
+            )}
+            {!loading && exito && actividades.length === 0 && <h4 style={{ textAlign: "center" }}>No hay actividades para mostrar</h4>}
         </div>
     );
 }

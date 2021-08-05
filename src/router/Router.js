@@ -17,6 +17,7 @@ import DataOrganization from "../pages/backoffice/organization";
 import Detail from "../Components/Activities/Detail";
 import Footer from "../Components/Footer/Footer";
 import About from "../Components/About";
+import ActivitiesList from "../Components/Activities/ActivitiesList";
 
 const ReduxDefaultComponent = () => (
   <header className="App-header">
@@ -75,6 +76,11 @@ const Router = () => {
           exact
           path="/backoffice/activities/create"
           component={ActivitiesForm}
+        />
+        <Route
+          exact
+          path="/backoffice/activities"
+          component={ActivitiesList}
         />
         <Route
           exact
