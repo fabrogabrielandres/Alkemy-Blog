@@ -1,4 +1,4 @@
-// import axios from 'axios';
+import axios from 'axios';
 
 // Function que obtiene el token del localStorage.
 const getLocalStorageToken = () => {
@@ -24,6 +24,19 @@ export const privateApiGet = async (URL, id = null) => {
   } catch (error) {
     return {
       msg: 'Error al realizar la peticion GET',
+      error
+    }
+  }
+}
+
+// Function que realiza la peticion POST, data es el objeto a enviar en el BODY del request
+export const privateApiPost = async (URL, data) => {
+  try {
+    const response = await axios.post(getURL(URL, null), data, getLocalStorageToken());
+    return response;
+  } catch (error) {
+    return {
+      msg: 'Error al realizar la peticion POST',
       error
     }
   }
