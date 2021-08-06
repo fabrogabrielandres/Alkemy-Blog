@@ -17,7 +17,7 @@ const getURL = (URL, id) => {
 }
 
 // Function que realiza la peticion GET
-export const privateApiGet = async (URL, id = null) => {
+export const GET = async (URL, id = null) => {
   try {
     const response = await axios.get(getURL(URL, id), getLocalStorageToken());
     return response;
@@ -30,13 +30,26 @@ export const privateApiGet = async (URL, id = null) => {
 }
 
 // Function que realiza la peticion POST, data es el objeto a enviar en el BODY del request
-export const privateApiPost = async (URL, data) => {
+export const POST = async (URL, data) => {
   try {
-    const response = await axios.post(getURL(URL, null), data, getLocalStorageToken());
+    const response = await axios.post(URL, data, getLocalStorageToken());
     return response;
   } catch (error) {
     return {
       msg: 'Error al realizar la peticion POST',
+      error
+    }
+  }
+}
+
+// Function que realiza la peticion PUT. Recibe data que es el objeto a enviar en el BODY del request.
+export const PUT = async (URL, id = null, data) => {
+  try {
+    const response = await axios.put(getURL(URL, id), data, getLocalStorageToken());
+    return response;
+  } catch (error) {
+    return {
+      msg: id === null ? 'Debe proporcionar un ID valido' : 'Error al realizar la peticion PUT',
       error
     }
   }
