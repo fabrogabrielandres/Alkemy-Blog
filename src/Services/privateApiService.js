@@ -55,6 +55,21 @@ export const PUT = async (URL, id = null, data) => {
   }
 }
 
+// Function que realiza la peticion DELETE
+export const DELETE = async (URL, id = null) => {
+  try {
+    if(id === null){
+      throw new Error(`Debe proporcionar un ID valido, ${id} no es un valor admitido.`);
+    }
+    const response = await axios.delete(getURL(URL, id), getLocalStorageToken());
+    return response;
+  } catch (error) {
+    return {
+      msg: 'Error al realizar la peticion DELETE',
+      error
+    }
+  }
+}
 /*
 const config = {
     headers: {
