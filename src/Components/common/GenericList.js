@@ -3,7 +3,6 @@ import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
@@ -27,7 +26,10 @@ export const GenericTableHead = ({
     Object.keys(datum).map((fieldName, index) => (
       <Th
         key={`thth#${index}`}
-        children={fieldName.replace(/_|URL$/gi, " ").replace(/image/i, "photo")}
+        children={fieldName
+          .replace(/_/g, " ")
+          .replace(/[ ]At$|URL$/gi, "")
+          .replace(/image/i, "photo")}
       />
     ));
   return (
@@ -58,34 +60,45 @@ export const GenericTableBody = ({
         />
       );
     });
-  return (
-    <Tbody {...props}>
-      <TableRows />
-    </Tbody>
-  );
+  return <Tbody {...props} children={<TableRows />} />;
 };
 
-const ActionLinks = ({ endpoint, id }) => (
-  <>
-    <ChakraUILink
-      as={RouterLink}
-      to={`/backoffice/${endpoint}/edit/${id}`}
-      children={<FaUserEdit size={16} color="green" /> ?? "Edit"}
-    />
-    <ChakraUILink
-      as={RouterLink}
-      to={`/backoffice/${endpoint}/delete/${id}`}
-      children={<TiUserDelete color="red" size={16} /> ?? "Delete"}
-    />
-  </>
-);
+const ActionLinks = ({ endpoint, id }) => {
+  const LinkContents = ({ Icon = () => null, text = "" }) => (
+    <Flex justify="center" align="center">
+      <Icon size={16} /> {text}
+    </Flex>
+  );
+  return (
+    <React.Fragment>
+      <ChakraUILink
+        as={RouterLink}
+        to={`/backoffice/${endpoint}/edit/${id}`}
+        children={<LinkContents Icon={FaUserEdit} />}
+      />
+      <ChakraUILink
+        as={RouterLink}
+        to={`/backoffice/${endpoint}/delete/${id}`}
+        children={<LinkContents Icon={TiUserDelete} />}
+      />
+    </React.Fragment>
+  );
+};
 const TableRowCells = ({
   datum = { "Empty data": "Empty Data" },
   ParentKey,
 }) => {
   return Object.entries(datum).map(([key, value], index) => {
     if (/At$/i.test(key)) {
-      value = new Date(value).toLocaleString();
+      const dateFormat = {
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      };
+      value = new Date(value).toLocaleString([], dateFormat);
     } else if (/image/i.test(key)) {
       const defaultImg =
         "https://starwhitedental.com/wp-content/uploads/2018/12/Team-Member-Male-Placeholder.png";
@@ -103,6 +116,9 @@ const TableRowCells = ({
   });
 };
 
+/**
+ * It's important that this element's height
+ */
 export const GenericList = ({
   data = [],
   caption = "Empty Title",
@@ -110,23 +126,26 @@ export const GenericList = ({
   endpoint = "",
 }) => {
   return (
-    <>
+    <React.Fragment>
       <ChakraUILink
         textAlign="left"
         children={`Create ${endpoint.replace(/s$/i, "")}`}
         as={RouterLink}
         to={endpoint ? `/backoffice/${endpoint.toLowerCase()}/create` : `/`}
       />
-      <Flex overflow="auto" h="100vh" w="100%">
-        <Table>
+      <Flex overflowX="auto" h="100vh" w="100%">
+        <Table h="100%">
           <TableCaption
             placement="top"
             position="sticky"
-            w="100%"
+            w="100vw"
+            h="5%"
             left={0}
             children={caption}
           />
           <GenericTableHead
+            h="5%"
+            w="100%"
             position="sticky"
             top={0}
             backgroundColor="white"
@@ -134,12 +153,14 @@ export const GenericList = ({
             deleteFields={excludeFields}
           />
           <GenericTableBody
+            h="90%"
+            overflowY="auto"
             data={data}
             endpoint={endpoint}
             deleteFields={excludeFields}
           />
         </Table>
       </Flex>
-    </>
+    </React.Fragment>
   );
 };
