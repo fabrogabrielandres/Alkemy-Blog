@@ -1,15 +1,26 @@
 import axios from 'axios';
 
+/*
 const config = {
     headers: {
         Group: 01                //Aqui va el ID del equipo!!
     }
 }
+*/
 
-const Get = () => {
-    axios.get('https://jsonplaceholder.typicode.com/users', config)
-    .then(res => console.log(res))
-    .catch(err => console.log(err))
-}
+//Esta funcion realiza el armado de la url
+const getURL = (URL, id) => {
+    return `${URL}${id !== null ? '/' + String(id) : ''}`
+  }
 
-export default Get
+export const publicApiGet = async (URL, id = null) => {
+    try {
+      const response = await axios.get(getURL(URL, id));
+      return response;
+    } catch (error) {
+      return {
+        msg: 'Ha ocurrido un error al realizar la peticion',
+        error
+      }
+    }
+  }
