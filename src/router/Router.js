@@ -15,6 +15,8 @@ import ActivitiesList from "../Components/Activities/ActivitiesList";
 import CategoriesList from "../Components/Categories/Categories";
 import Home from "../pages/home";
 import About from '../Components/About'
+import DonationComponent from "../Components/Donations/Donacion";
+import ThanksComponent from "../Components/Donations/Gracias";
 import NewsList from "../Components/News/NewsList";
 
 const Router = () => {
@@ -37,6 +39,8 @@ const Router = () => {
         <Route exact path="/backoffice/members/create" component={MembersForm} />
         <Route exact path="/backoffice/members/edit/:id" component={(member) => <MembersForm {...member} />} />
         <Route exact path="/activities/:id" component={() => <Detail content="propsContentHere" />} />
+        <Route exact path="/donar" component={() => <DonationComponent text="Realiza tu Donacion" />} />
+        <Route exact path="/gracias" component={ThanksComponent} />
         <Route exact path="/news/:id" component={() => <NewsDetail title="Detalle de novedad" />} />
         <Route exact path="/us" component={About} />
         <Route exact path="/backoffice/news" component={NewsList}/>
