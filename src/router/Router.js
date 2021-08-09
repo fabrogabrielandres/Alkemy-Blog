@@ -13,8 +13,9 @@ import Detail from '../Components/Activities/Detail';
 import Footer from "../Components/Footer/Footer";
 import ActivitiesList from "../Components/Activities/ActivitiesList";
 import CategoriesList from "../Components/Categories/Categories";
-import Home from "../pages/Home";
+import Home from "../pages/home";
 import About from '../Components/About'
+import NewsList from "../Components/News/NewsList";
 
 const Router = () => {
   return (
@@ -38,6 +39,7 @@ const Router = () => {
         <Route exact path="/activities/:id" component={() => <Detail content="propsContentHere" />} />
         <Route exact path="/news/:id" component={() => <NewsDetail title="Detalle de novedad" />} />
         <Route exact path="/us" component={About} />
+        <Route exact path="/backoffice/news" component={NewsList}/>
       </Switch>
       <Footer />
     </BrowserRouter>

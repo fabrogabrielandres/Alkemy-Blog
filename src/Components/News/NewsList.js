@@ -1,32 +1,69 @@
-import React from 'react';
-import '../CardListStyles.css';
+import React, { useEffect, useState } from 'react';
+import { AspectRatio, Button, ButtonGroup, Image, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
+import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 
-const NewsList = () => {
-    const newsMock = [
-        {id: 2, name: 'Titulo de prueba', description: 'Descripcion de prueba'},
-        {id: 1, name: 'Titulo de prueba', description: 'Descripcion de prueba'},
-        {id: 3, name: 'Titulo de prueba', description: 'Descripcion de prueba'}
-    ];
+
+export const NewsList = () => {
+    const [newsList, setNewsList] = useState([])
+    const histoy = useHistory()
+
+    const fetchNewsList = async () => {
+        try {
+            let response = await axios.get("http://ongapi.alkemy.org/api/news#t53")
+
+            setNewsList(response.data.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(() => {
+        fetchNewsList()
+    }, [])
 
     return (
-        <div>
-            <h1>Listado de Novedades</h1>
-            <ul className="list-container">
-                {newsMock.length > 0 ? 
-                    newsMock.map((element) => {
-                        return(
-                            <li className="card-info" key={element.id}>
-                                <h3>{element.name}</h3>
-                                <p>{element.description}</p>
-                            </li>
+        <>
+            <Table variant="simple">
+                <Thead>
+                    <Tr>
+                        <Th>
+                            <Button onClick={() => histoy.push("/backoffice/news/create")}>Crear Nuevo</Button>
+                        </Th>
+                    </Tr>
+                </Thead>
+                <Tbody>
+
+                    {newsList ?
+                        newsList.map((news,key) =>
+                            <Tr key={key}>
+                                <>
+                                    <Td>
+                                        <AspectRatio maxW="455px" ratio={1}>
+                                            <Image src={news.image} boxSize="300px" alt="" />
+                                        </AspectRatio>
+                                    </Td>
+
+                                    <Td> {news.name} </Td>
+                                    <Td> {news.created_at} </Td>
+                                    <Td>
+                                        <ButtonGroup variant="outline" spacing="6">
+                                            <Button colorScheme="blue">Editar</Button>
+                                            <Button>Eliminar</Button>
+                                        </ButtonGroup>
+                                    </Td>
+
+                                </>
+                            </Tr>
                         )
-                    })
-                :
-                    <p>No hay novedades</p>
-                }
-            </ul>
-        </div>
-    );
+                        : <Tr>
+                            <Td>No hay Novedades</Td>
+                        </Tr>
+                    }
+                </Tbody>
+            </Table>
+        </>
+    )
 }
- 
+
 export default NewsList;
