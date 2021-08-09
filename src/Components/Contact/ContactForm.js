@@ -11,15 +11,13 @@ import axios from 'axios';
 import CustomField from './CustomField';
 import { SignupSchema } from './ValidationSchema';
 
-export const ContactForm = () => {
+const ContactForm = () => {
 
     const url = 'http://ongapi.alkemy.org/api/contacts#t53';
 
     return(
 
     <div>
-        <h1>Contacto</h1>
-
         <Formik
 
             initialValues={{
@@ -67,3 +65,5 @@ export const ContactForm = () => {
     </div>
 )
 };
+
+export default ContactForm

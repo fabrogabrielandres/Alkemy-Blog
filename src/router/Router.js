@@ -18,6 +18,7 @@ import About from '../Components/About'
 import DonationComponent from "../Components/Donations/Donacion";
 import ThanksComponent from "../Components/Donations/Gracias";
 import NewsList from "../Components/News/NewsList";
+import ContactPage from "../Components/Contact/ContactPage"
 
 const Router = () => {
   return (
@@ -44,6 +45,7 @@ const Router = () => {
         <Route exact path="/news/:id" component={() => <NewsDetail title="Detalle de novedad" />} />
         <Route exact path="/us" component={About} />
         <Route exact path="/backoffice/news" component={NewsList} />
+        <Route exact path="/contacto" component={(contactInfo) => <ContactPage info={contactInfo} />} />
       </Switch>
       <Footer />
     </BrowserRouter>
