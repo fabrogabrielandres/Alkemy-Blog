@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import {HomeBackoffice} from "../pages/backoffice/home";
+import { HomeBackoffice } from "../pages/backoffice/home";
 import { NewsForm } from "../Components/News/NewsForm";
 import { MembersForm } from "../Components/Members/MembersForm";
 import { UserForm } from "../Components/Users/UserForm";
@@ -13,7 +13,7 @@ import Detail from '../Components/Activities/Detail';
 import Footer from "../Components/Footer/Footer";
 import ActivitiesList from "../Components/Activities/ActivitiesList";
 import CategoriesList from "../Components/Categories/Categories";
-import Home from "../pages/home";
+import Home from "../pages/Home";
 import About from '../Components/About'
 import DonationComponent from "../Components/Donations/Donacion";
 import ThanksComponent from "../Components/Donations/Gracias";
@@ -43,7 +43,7 @@ const Router = () => {
         <Route exact path="/gracias" component={ThanksComponent} />
         <Route exact path="/news/:id" component={() => <NewsDetail title="Detalle de novedad" />} />
         <Route exact path="/us" component={About} />
-        <Route exact path="/backoffice/news" component={NewsList}/>
+        <Route exact path="/backoffice/news" component={NewsList} />
       </Switch>
       <Footer />
     </BrowserRouter>
