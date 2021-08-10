@@ -35,7 +35,7 @@ export const NewsList = () => {
                 <Tbody>
 
                     {newsList ?
-                        newsList.map((news,key) =>
+                        newsList.map((news, key) =>
                             <Tr key={key}>
                                 <>
                                     <Td>

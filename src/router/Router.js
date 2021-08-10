@@ -22,6 +22,7 @@ import DonationComponent from "../Components/Donations/Donacion";
 import ThanksComponent from "../Components/Donations/Gracias";
 import NewsList from "../Components/News/NewsList";
 import ContactPage from "../Components/Contact/ContactPage";
+import NewsPage from "../Components/News/NewsPage";
 
 const Router = () => {
   return (
@@ -47,11 +48,12 @@ const Router = () => {
         <Route exact path="/activities/:id" component={() => <Detail content="propsContentHere" />} />
         <Route exact path="/donar" component={() => <DonationComponent text="Realiza tu Donacion" />} />
         <Route exact path="/gracias" component={ThanksComponent} />
-        <Route exact path="/news/:id" component={() => <NewsDetail title="Detalle de novedad" />} />
+        <Route exact path="/novedades/:id" component={() => <NewsDetail title="Detalle de novedad" />} />
         <Route exact path="/us" component={About} />
         <Route exact path="/actividades" component={ActivitiesSection} />
         <Route exact path="/backoffice/news" component={NewsList} />
         <Route exact path="/contacto" component={(contactInfo) => <ContactPage info={contactInfo} />} />
+        <Route exact path="/novedades" component={NewsPage} />
       </Switch>
       <Footer />
     </BrowserRouter>
