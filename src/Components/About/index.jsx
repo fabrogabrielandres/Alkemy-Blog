@@ -1,5 +1,5 @@
 import React from 'react';
-import Title from '../Title/Title';
+import {GenericTitle as AboutTitle} from '../common/GenericTitle';
 import AboutUs from './AboutUs/AboutUs';
 import Members from './Members';
 
@@ -7,7 +7,7 @@ import Members from './Members';
 const About = () => {
   return (
     <>
-      <Title titleText='Nosotros' />
+      <AboutTitle text='Nosotros' />
       <AboutUs text='Text dinamico obtenido desde la API' />
       <Members/>
     </>
