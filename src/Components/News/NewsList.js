@@ -66,4 +66,4 @@ export const NewsList = () => {
     )
 }
 
-export default NewsList;
+export default NewsList; 

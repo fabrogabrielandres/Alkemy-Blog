@@ -58,7 +58,7 @@ export const PUT = async (URL, id = null, data) => {
 // Function que realiza la peticion DELETE
 export const DELETE = async (URL, id = null) => {
   try {
-    if(id === null){
+    if (id === null) {
       throw new Error(`Debe proporcionar un ID valido, ${id} no es un valor admitido.`);
     }
     const response = await axios.delete(getURL(URL, id), getLocalStorageToken());
@@ -77,3 +77,26 @@ const config = {
     }
 }
 */
+
+
+export const PATCH = async (URL, id = null, datosActualizacion) => {
+  try {
+    if (id === null || id===undefined) {
+      throw new Error(`Debe proporcionar un ID valido, ${id} no es un valor admitido.`);
+    }
+    const response = await axios(getURL(URL, id), {
+      method: 'patch',
+      headers: getLocalStorageToken(),
+      data: datosActualizacion
+    })
+    return response
+
+  } catch (error) {
+    return {
+      msg: 'Error al realizar la peticion Patch',
+      error
+    }
+  }
+}
+
+

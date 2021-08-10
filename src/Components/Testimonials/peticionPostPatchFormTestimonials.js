@@ -18,4 +18,4 @@ export const peticionPostPatchFormTestimonials = async (values) => {
             console.log(error);
         }
 
-}
+} 

@@ -10,4 +10,4 @@ export const schemaFormCreateEditTestimonials = Yup.object().shape({
         .test('fileFormat', 'solo archivos image/jpg , image/png', (value) => {
              return value && ['image/jpg', 'image/png'].includes(value.type);
         }),
-})
+}) 
