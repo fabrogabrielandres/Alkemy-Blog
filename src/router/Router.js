@@ -8,6 +8,7 @@ import { MembersList } from "../Components/Members/MembersList";
 import { UserForm } from "../Components/Users/UserForm";
 import { ActivitiesForm } from "../Components/Activities/ActivitiesForm";
 import NewsDetail from "../Components/News/Detail";
+import { SlidesList } from "../Components/Slides/SlidesList";
 import SlidesForm from "../Components/Slides/SlidesForm";
 import FormEditData from "../Components/Backoffice/Organization/edit";
 import DataOrganization from "../pages/backoffice/organization";
@@ -35,6 +36,7 @@ const Router = () => {
         <Route exact path="/backoffice/activities" component={ActivitiesList} />
         <Route exact path="/backoffice/organization" component={DataOrganization} />
         <Route exact path="/backoffice/organization/edit" component={FormEditData} />
+        <Route exact path="/backoffice/slides" component={SlidesList} />
         <Route exact path="/backoffice/slides/create" component={SlidesForm} />
         <Route exact path="/backoffice/slides/:id" component={SlidesForm} />
         <Route exact path="/backoffice/categories" component={CategoriesList} />

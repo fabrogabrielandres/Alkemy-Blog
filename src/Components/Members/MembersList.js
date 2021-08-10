@@ -29,9 +29,17 @@ export const MembersList = () => {
   }, []);
   return membersResponse.success ? (
     <GenericList
-      excludeFields={["description", "group_id"]}
+      excludeFields={["description", "group_id",
+        "id",
+        "facebookUrl",
+        "linkedinUrl",
+        "created_at",
+        "deleted_at",
+        "updated_at",
+
+      ]}
       data={membersResponse.data}
-      caption={"Members List"}
+      caption={"Lista de Miembros"}
       endpoint="members"
     />
   ) : (

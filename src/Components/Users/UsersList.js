@@ -22,8 +22,10 @@ export const UsersList = () => {
   return usersResponseData.success ? (
     <GenericList
       data={usersResponseData.data}
+      caption={"Lista de Usuarios"}
       endpoint={"users"}
       excludeFields={[
+        "id",
         "longitude",
         "latitude",
         "password",
@@ -31,6 +33,13 @@ export const UsersList = () => {
         "group_id",
         "role_id",
         "remember_token",
+        "facebookUrl",
+        "linkedinUrl",
+        "email",
+        "email_verified_at",
+        "created_at",
+        "deleted_at",
+        "updated_at",
       ]}
     />
   ) : (
