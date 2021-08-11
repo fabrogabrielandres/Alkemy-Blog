@@ -2,16 +2,14 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 import NewsList from '../../Components/News/NewsList';
+import Carrousel from '../../Components/Carrousel';
 
 import {
   Box,
 } from '@chakra-ui/react';
 
-
 const Home = () => {
-
   const [organization, setOrganization] = useState({});
-
 
   const baseURL = 'http://ongapi.alkemy.org/api';
 
@@ -40,17 +38,13 @@ const Home = () => {
       </Box>
       <Box
         w='100%'
-        borderY='2px'
-        borderColor='black'
         textAlign='center'
         mt='100px'
       >
-        <h2>Acá va el carrousel</h2>
+        <Carrousel />
       </Box>
       <Box
         w='100%'
-        borderY='2px'
-        borderColor='black'
         textAlign='center'
         mt='100px'
       >
@@ -58,6 +52,7 @@ const Home = () => {
       </Box>
     </>
   );
+
 }
 
 export default Home;
