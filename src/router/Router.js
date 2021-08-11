@@ -50,7 +50,7 @@ const Router = () => {
         <Route exact path="/activities/:id" component={() => <Detail content="propsContentHere" />} />
         <Route exact path="/donar" component={() => <DonationComponent text="Realiza tu Donacion" />} />
         <Route exact path="/gracias" component={ThanksComponent} />
-        <Route exact path="/novedades/:id" component={() => <NewsDetail title="Detalle de novedad" />} />
+        <Route exact path="/backoffice/news/:id" component={() => <NewsDetail title="Detalle de novedad" />} />
         <Route exact path="/us" component={About} />
         <Route exact path="/actividades" component={ActivitiesSection} />
         <Route exact path="/backoffice/news" component={NewsList} />
