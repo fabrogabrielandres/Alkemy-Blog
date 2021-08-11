@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from "react";
-import "../FormStyles.css";
+import { useParams } from "react-router";
+import { getSlides, putSlides, postSlides } from "../../Services/slidesApiService";
 import FormSlides from "./Form";
-import axios from "axios";
+import "../FormStyles.css";
 
 const SlidesForm = ({ match, setCallToForm }) => {
-  console.log(match)
+  //console.log(match)
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
   const [exito, setExito] = useState(false);
   const [carga, setCarga] = useState(false);
   const [error, setError] = useState(null);
 
+  const { id } = useParams();
   useEffect(() => {
     setLoading(true);
-    if (match.id) {
-      axios(`http://ongapi.alkemy.org/api/slides/${match.id}`)
+    if (id) {
+      //axios(`http://ongapi.alkemy.org/api/slides/${id}`)
+      getSlides(id)
         .then((res) => {
           setData({
             nombre: res.data.data.name,
@@ -39,22 +42,17 @@ const SlidesForm = ({ match, setCallToForm }) => {
       setLoading(false);
       setCarga(true);
     }
-  }, [match]);
+  }, [id]);
 
   const handleSubmit = async (values) => {
-     const json = {
+    const json = {
       image: Buffer.from(String(values.imagen.name)).toString("base64"),
       name: values.nombre,
       description: values.descripcion,
       order: values.order
-      }
-    const create = (slide) =>
-      axios.post("http://ongapi.alkemy.org/api/slides#t53", slide);
-    const update = (slide) =>
-      axios.put(
-        `http://ongapi.alkemy.org/api/slides/${match.id}#t53`,
-        slide
-      );
+    }
+    const create = (slide) => postSlides(slide);
+    const update = (slide) => putSlides(id, slide);
     try {
       const res = match.id ? await update(json) : await create(json);
       console.log(res);

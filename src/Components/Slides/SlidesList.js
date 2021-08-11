@@ -3,6 +3,7 @@ import axios from "axios";
 import { Stack, Skeleton } from "@chakra-ui/react";
 import { API_BASE_URL } from "../../common/configurations";
 import { GenericList } from "../common/GenericList";
+import { getSlides } from "../../Services/slidesApiService";
 export const SlidesList = () => {
   const undefinedResponse = {
     success: undefined,
@@ -12,8 +13,7 @@ export const SlidesList = () => {
   };
   const [slidesResponse, setSlidesResponse] = React.useState(undefinedResponse);
   React.useEffect(() => {
-    axios
-      .get(API_BASE_URL + "/slides")
+    getSlides()
       .then((response) => setSlidesResponse(response.data))
       .catch((error) => setSlidesResponse(error.response?.data));
   }, []);
