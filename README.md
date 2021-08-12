@@ -28,3 +28,21 @@ The build is minified and the filenames include the hashes.<br />
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+
+###
+ 
+From the react-content-loader library a skeleton loader is shown while the page is loading.
+
+The Skeleton component can receive the following props,
+type: where I can choose between the following options (Card, Table, CheckBox, Text, Image, Dost, or default),
+and others to customize the previous ones that are (speed
+width
+height
+viewBox
+backgroundColor
+foregroundColor)
+
+
+
+
