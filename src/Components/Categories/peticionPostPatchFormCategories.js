@@ -1,18 +1,21 @@
-import axios from 'axios';
+import { createCategory, editCategory } from './ServicesCategories';
 
 export const peticionPostPatchFormCategories = async (values) => {
+    console.log(values)
     if (!values.hasOwnProperty("id")) {
         try {
-            await axios.post(`http://ongapi.alkemy.org/api/categoreies#t53`, values)
+            const postCategory = await createCategory(values)
+            console.log(postCategory);
+            return postCategory;
             
         } catch (error) {
             console.log(error);
         }
     } else
         try {
-            await axios.patch(`http://ongapi.alkemy.org/api/categoreies#t53/:${values.id}`, values)
-            console.log("patch");
-
+            const putCategory = await editCategory(values.id, values)
+            console.log(putCategory);
+            //return putCategory;
         } catch (error) {
             console.log(error);
         }

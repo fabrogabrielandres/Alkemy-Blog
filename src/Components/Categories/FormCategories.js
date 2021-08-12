@@ -1,19 +1,39 @@
-import React from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import { Button, FormLabel, Input, Text } from '@chakra-ui/react';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { schemaFormCreateEditCategories } from './schemaFormCreateEditCategories';
 import { peticionPostPatchFormCategories } from "./peticionPostPatchFormCategories"
+import { getCategories } from './ServicesCategories';
+import { useParams } from 'react-router-dom';
 
-export const FormCategories = ({ categories }) => {
-    //categories puede ser recivido por propos o mas adelante con el useSelector
+export const FormCategories = () => {
+   
+    const [categories, setCategories] = useState({});
+
+    const {id} = useParams();
+
+    const getCategory = useCallback( async (id) => {
+        try {
+            const res = await getCategories(id);
+            setCategories(res.data.data);
+        } catch (error) {
+            console.log(error)
+        }
+    }, [])
+    
+    useEffect(() => {
+        getCategory(id);
+    }, [getCategory, id])
+
+
     const initialValues = {
         "name": "",
         "description": "",
         "image": "",
     }
-    
+
     const convertirABase64 = (image) => {
         return new Promise((res, req) => {
             let reader = new FileReader();

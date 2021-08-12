@@ -23,6 +23,7 @@ import DonationComponent from "../Components/Donations/Donacion";
 import ThanksComponent from "../Components/Donations/Gracias";
 import NewsList from "../Components/News/NewsList";
 import ContactPage from "../Components/Contact/ContactPage";
+import { FormCategories } from "../Components/Categories/FormCategories";
 import NewsPage from "../Components/News/NewsPage";
 
 const Router = () => {
@@ -40,6 +41,8 @@ const Router = () => {
         <Route exact path="/backoffice/slides/create" component={SlidesForm} />
         <Route exact path="/backoffice/slides/:id" component={SlidesForm} />
         <Route exact path="/backoffice/categories" component={CategoriesList} />
+        <Route exact path='/backoffice/categories/create' component={FormCategories} />
+        <Route exact path='/backoffice/categories/edit/:id' component={FormCategories} />
         <Route exact path="/backoffice/users" component={UsersList} />
         <Route exact path="/backoffice/users/create" component={UserForm} />
         <Route exact path="/backoffice/users/edit/:id" component={(news) => <NewsForm {...news} />} />
