@@ -17,7 +17,7 @@ import Footer from "../Components/Footer/Footer";
 import ActivitiesList from "../Components/Activities/ActivitiesList";
 import CategoriesList from "../Components/Categories/Categories";
 import { ActivitiesSection } from "../Components/Activities/ActivitiesSection";
-import Home from "../pages/home/index";
+import Home from "../pages/Home/index";
 import About from "../Components/About";
 import DonationComponent from "../Components/Donations/Donacion";
 import ThanksComponent from "../Components/Donations/Gracias";
@@ -50,7 +50,7 @@ const Router = () => {
         <Route exact path="/backoffice/members" component={MembersList} />
         <Route exact path="/backoffice/members/create" component={MembersForm} />
         <Route exact path="/backoffice/members/edit/:id" component={(member) => <MembersForm {...member} />} />
-        <Route exact path="/activities/:id" component={() => <Detail content="propsContentHere" />} />
+        <Route exact path="/activities/:id" component={() => <Detail />} />
         <Route exact path="/donar" component={() => <DonationComponent text="Realiza tu Donacion" />} />
         <Route exact path="/gracias" component={ThanksComponent} />
         <Route exact path="/backoffice/news/:id" component={() => <NewsDetail title="Detalle de novedad" />} />

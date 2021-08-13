@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import axios from 'axios';
 //import '../CardListStyles.css';
 import {
     Table,
@@ -13,6 +12,7 @@ import {
     Button,
     Link,
   } from "@chakra-ui/react"
+import { deleteActivities, getActivities } from './ServicesActivities';
 
 const ActivitiesList = () => {
     const [actividades, setActividades] = useState([]);
@@ -20,27 +20,29 @@ const ActivitiesList = () => {
     const [error, setError] = useState(null);
     const [exito, setExito] = useState(false);
 
-    useEffect(() => {
+    const activitiesAndSettings = async (id) => {
         setLoading(true);
-        axios(`http://ongapi.alkemy.org/api/activities`)
-            .then((res) => {
-              setActividades(res.data.data);
-              setLoading(false);
-              setExito(true);
-            })
-            .catch((error) => {
-              setError("Ha ocurrido un error al conectar con el servidor. Intentelo de nuevo")
-              setLoading(false);
-            });
-        }, []);
+        try {
+            const res = await getActivities(id)
+            setActividades(res.data.data);
+            setLoading(false);
+            setExito(true);
+        } catch (error) {
+            setError("Ha ocurrido un error al conectar con el servidor. Intentelo de nuevo")
+            setLoading(false);
+        }
+    }
+
+    useEffect(() => {
+        activitiesAndSettings();
+    }, []);
 
     function editar(id) {
        window.location.href = `/backoffice/activities/edit/${id}`;
     }
 
     function eliminar(id) {
-        console.log(id);
-        // aca deberia hacer una peticion delete a la API que elimine la actividad
+        deleteActivities(id)
     }
 
     return (
@@ -55,10 +57,10 @@ const ActivitiesList = () => {
             </Grid>
             {error &&
             <div>
-             <h4 style={{ textAlign: "center" }}>{error}</h4>
-             <Button colorScheme="red" size="sm" onClick={() => window.location.href = "/backoffice/activities"}>
-                Recargar
-             </Button>
+                <h4 style={{ textAlign: "center" }}>{error}</h4>
+                <Button colorScheme="red" size="sm" onClick={() => window.location.href = "/backoffice/activities"}>
+                    Recargar
+                </Button>
             </div>
             }
             {loading && !exito && <h4 style={{ textAlign: "center" }}>Cargando...</h4>}
@@ -76,13 +78,13 @@ const ActivitiesList = () => {
                     {
                         actividades.map((actividad) => {
                             return(
-                                <Tr>
+                                <Tr key={actividad.id}>
                                     <Td>{actividad.name}</Td>
                                     <Td>
                                         {actividad.image === null ?
-                                          <p>Sin Imagen</p>
-                                          : 
-                                          <img alt="" src={actividad.image}
+                                            <p>Sin Imagen</p>
+                                            : 
+                                            <img alt="" src={actividad.image}
                                             width={200} height={200}
                                             />
                                         }

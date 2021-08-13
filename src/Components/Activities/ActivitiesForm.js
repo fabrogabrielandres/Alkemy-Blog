@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import { useParams} from 'react-router-dom';
+
 import {
   Formik,
   Form,
@@ -18,6 +18,8 @@ import {
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import * as Yup from 'yup';
+import { createActivities, editActivities, getActivities} from './ServicesActivities';
+
 
 // Validaciones del formulario
 const activitiesSchema = Yup.object().shape({
@@ -63,21 +65,25 @@ export const ActivitiesForm = () => {
   const { id } = useParams();
 
   // useEffect que trae una actividad por id para edicion de actividades.
-  useEffect(() => {
-    if (id) {
-      axios.get(`http://ongapi.alkemy.org/api/activities/${id}`)
-        .then(res => {
+  useEffect( () => {
+    async function getData(){
+      if (id) { 
+        try {
+          const res = await getActivities(id);
           setInitialValues({
             name: res.data.data.name,
             description: res.data.data.description,
             image: {}
           });
           setShowForm(true);
-        })
-        .catch(e => console.log(`error: ${e}`));
-    } else {
-      setShowForm(true);
+        } catch (error) {
+          console.log(error)
+        }
+      } else {
+        setShowForm(true);
+      }
     }
+    getData()
   }, [id])
 
   // Manejo del submit
@@ -90,20 +96,16 @@ export const ActivitiesForm = () => {
     }
     if (id) {
       try {
-        const response = await axios.put(`http://ongapi.alkemy.org/api/activities/${id}`, data);
-        console.log(response);
+        editActivities(id, data);
+        //MENSAJE DE EDIT EXITOSO
       } catch (error) {
         console.log(error);
         alert(`Error al editar la actividad \n${error}`);
       }
     } else {
       try {
-        const response = await axios.post(`http://ongapi.alkemy.org/api/activities`, data, {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        })
-        console.log(response);
+        createActivities(data);
+        //MENSAJE DE CREACIÓN EXITOSA
       } catch (error) {
         console.log(error);
         alert(`Error al guardar la actividad \n${error}`);

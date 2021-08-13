@@ -1,31 +1,42 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { GenericTitle as ActivityTitle } from "../../common/GenericTitle";
 import { Content } from './Content';
+import { getActivities } from '../ServicesActivities';
+import { useParams } from 'react-router-dom';
 
 import { Box } from "@chakra-ui/react";
+import { useCallback } from "react";
 
-const testingContent = `
-  <h3>Titulo de la actividad</h3>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-  sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
-  nisi ut aliquip ex ea commodo consequat.</p>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-  sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
-  nisi ut aliquip ex ea commodo consequat.</p>
-`
+const Detail = () => {
 
-const Detail = ({ content }) => {
+  const [values, setValues] = useState('')
+
+  const { id } = useParams();
+
+
+  const activitiesForID = useCallback(async (id) => {
+    try {
+      const res = await getActivities(id)
+      setValues(res.data.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }, [])
+
+  useEffect(() => {
+    activitiesForID(id)
+  }, [activitiesForID, id])
+
+
   return (
     <>
-      <Box w="100%" p={4} color="white" mt="0" mb="20px">
-        <ActivityTitle text="Title pasado por props" />
+      {console.log(values)}
+      <Box w="100%" p={4} color="white" mt='0' mb='20px'>
+        <ActivityTitle text={values.name} />
       </Box>
-      <Box w="100%" p={4} color="black" mt="0" mb="20px" fontSize="3rem">
-        {content}
+      <Box w="100%" p={4} color="black" mt='0' mb='20px' fontSize='3rem'>
+        <Content content={values.description} />
       </Box>
-      <Content content={testingContent} />
     </>
   );
 };

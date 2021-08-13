@@ -56,7 +56,7 @@ export const PUT = async (URL, id = null, data) => {
 }
 
 // Function que realiza la peticion DELETE
-export const DELETE = async (URL, id = null) => {
+export const DELETE = async (URL, id) => {
   try {
     if (id === null) {
       throw new Error(`Debe proporcionar un ID valido, ${id} no es un valor admitido.`);
