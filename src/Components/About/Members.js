@@ -1,78 +1,72 @@
-import React, { useState, useEffect } from 'react'
-import axios from "axios"
-import facebookIcon from "./icons/facebook-icon.png"
-import linkedinIcon from "./icons/linkedin-icon.png"
+import React, { useState, useEffect } from "react";
+import facebookIcon from "./icons/facebook-icon.png";
+import linkedinIcon from "./icons/linkedin-icon.png";
+import { useSelector, useDispatch } from "react-redux";
+import { getUs } from "../../features/Us/usSlice";
 
 import {
-    Table,
-    Tr,
-    Image,
-    Flex,
-    Box,
-    Th,
-    Container,
-    Thead,
-    Link
-} from "@chakra-ui/react"
+  Table,
+  Tr,
+  Image,
+  Flex,
+  Box,
+  Th,
+  Container,
+  Thead,
+  Link,
+} from "@chakra-ui/react";
 
 const Members = () => {
+  const dispatch = useDispatch();
+  const { us } = useSelector((state) => state.us);
 
-    const [list, setList] = useState([]);
+  useEffect(() => {
+    dispatch(getUs());
+  }, [dispatch]);
 
-    const URL = "http://ongapi.alkemy.org/api/members"
+  return (
+    <Container maxW="container.lg">
+      {us.map((member) => (
+        <Table variant="unstyled">
+          <Thead>
+            <Tr>
+              <Flex alignItems="center" flexWrap="wrap">
+                <Th>
+                  <Image
+                    src={member.image}
+                    alt={member.name}
+                    boxSize="100px"
+                    objectFit="cover"
+                  />
+                </Th>
 
-    useEffect(() => {
-        const getMembers = async () => {
-            await axios.get(URL)
-                .then(result => setList(result.data.data))
-                .catch(err => console.error(err))
-        }
-        getMembers()
-    }, [])
+                {/* Name and description */}
+                <Th>
+                  <Box width="150px">
+                    <strong>{member.name}</strong>
+                    <br></br>
+                    <strong>{member.description}</strong>
+                  </Box>
+                </Th>
+              </Flex>
 
-    return (
-        <Container maxW="container.lg">
-            {list.map(member =>
-                <Table variant="unstyled">
-                    <Thead>
-                        <Tr>
-                            <Flex alignItems="center" flexWrap="wrap">
-                                <Th>
-                                    <Image
-                                        src={member.image}
-                                        alt={member.name}
-                                        boxSize="100px"
-                                        objectFit="cover"
-                                    />
-                                </Th>
+              {/* Social media icons */}
+              <Th>
+                <Flex flexDirection="row">
+                  <Link href={member.facebookUrl} isExternal>
+                    <Image m={2} src={facebookIcon} />
+                  </Link>
+                  <Link href={member.linkedinUrl} isExternal>
+                    <Image m={2} src={linkedinIcon} />
+                  </Link>
+                </Flex>
+              </Th>
+            </Tr>
+          </Thead>
+        </Table>
+      ))}
+    </Container>
+  );
+};
 
-                                {/* Name and description */}
-                                <Th>
-                                    <Box width="150px">
-                                        <strong>{member.name}</strong>
-                                        <br></br>
-                                        <strong>{member.description}</strong>
-                                    </Box>
-                                </Th>
-                            </Flex>
-
-                            {/* Social media icons */}
-                            <Th>
-                                <Flex flexDirection="row">
-                                    <Link href={member.facebookUrl} isExternal>
-                                        <Image m={2} src={facebookIcon} />
-                                    </Link>
-                                    <Link href={member.linkedinUrl} isExternal>
-                                        <Image m={2} src={linkedinIcon} />
-                                    </Link>
-                                </Flex>
-                            </Th>
-                        </Tr>
-                    </Thead>
-                </Table>
-            )}
-        </Container>
-    )
-}
-
-export default Members
+export default Members;
