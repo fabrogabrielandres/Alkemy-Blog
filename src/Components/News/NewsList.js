@@ -27,7 +27,7 @@ export const NewsList = () => {
 
   const fetchNewsList = async () => {
     try {
-      let response = await axios.get("http://ongapi.alkemy.org/api/new#t53");
+      let response = await axios.get("http://ongapi.alkemy.org/api/news#t53");
 
       setNewsList(response.data.data);
       setLoading(false);

@@ -32,32 +32,84 @@ const Router = () => {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/backoffice" component={HomeBackoffice} />
-        <Route exact path="/backoffice/activities/create" component={ActivitiesForm} />
-        <Route exact path="/backoffice/activities/edit/:id" component={ActivitiesForm} />
+        <Route
+          exact
+          path="/backoffice/activities/create"
+          component={ActivitiesForm}
+        />
+        <Route
+          exact
+          path="/backoffice/activities/edit/:id"
+          component={ActivitiesForm}
+        />
         <Route exact path="/backoffice/activities" component={ActivitiesList} />
-        <Route exact path="/backoffice/organization" component={DataOrganization} />
-        <Route exact path="/backoffice/organization/edit" component={FormEditData} />
+        <Route
+          exact
+          path="/backoffice/organization"
+          component={DataOrganization}
+        />
+        <Route
+          exact
+          path="/backoffice/organization/edit"
+          component={FormEditData}
+        />
         <Route exact path="/backoffice/slides" component={SlidesList} />
         <Route exact path="/backoffice/slides/create" component={SlidesForm} />
         <Route exact path="/backoffice/slides/:id" component={SlidesForm} />
         <Route exact path="/backoffice/categories" component={CategoriesList} />
-        <Route exact path='/backoffice/categories/create' component={FormCategories} />
-        <Route exact path='/backoffice/categories/edit/:id' component={FormCategories} />
+        <Route
+          exact
+          path="/backoffice/categories/create"
+          component={FormCategories}
+        />
+        <Route
+          exact
+          path="/backoffice/categories/edit/:id"
+          component={FormCategories}
+        />
         <Route exact path="/backoffice/users" component={UsersList} />
         <Route exact path="/backoffice/users/create" component={UserForm} />
-        <Route exact path="/backoffice/users/edit/:id" component={(news) => <NewsForm {...news} />} />
+        <Route
+          exact
+          path="/backoffice/users/edit/:id"
+          component={(news) => <NewsForm {...news} />}
+        />
         <Route exact path="/backoffice/news/create" component={NewsForm} />
         <Route exact path="/backoffice/members" component={MembersList} />
-        <Route exact path="/backoffice/members/create" component={MembersForm} />
-        <Route exact path="/backoffice/members/edit/:id" component={(member) => <MembersForm {...member} />} />
-        <Route exact path="/activities/:id" component={() => <Detail />} />
-        <Route exact path="/donar" component={() => <DonationComponent text="Realiza tu Donacion" />} />
+        <Route
+          exact
+          path="/backoffice/members/create"
+          component={MembersForm}
+        />
+        <Route
+          exact
+          path="/backoffice/members/edit/:id"
+          component={(member) => <MembersForm {...member} />}
+        />
+        <Route
+          exact
+          path="/activities/:id"
+          component={() => <Detail content="propsContentHere" />}
+        />
+        <Route
+          exact
+          path="/donar"
+          component={() => <DonationComponent text="Realiza tu Donacion" />}
+        />
         <Route exact path="/gracias" component={ThanksComponent} />
-        <Route exact path="/backoffice/news/:id" component={() => <NewsDetail title="Detalle de novedad" />} />
+        <Route
+          exact
+          path="/backoffice/news/:id"
+          component={() => <NewsDetail title="Detalle de novedad" />}
+        />
         <Route exact path="/us" component={About} />
         <Route exact path="/actividades" component={ActivitiesSection} />
         <Route exact path="/backoffice/news" component={NewsList} />
-        <Route exact path="/contacto" component={ContactPage} />
+        <Route
+          exact
+          path="/contacto"
+          component={(contactInfo) => <ContactPage info={contactInfo} />}
+        />
         <Route exact path="/novedades" component={NewsPage} />
       </Switch>
       <Footer />
