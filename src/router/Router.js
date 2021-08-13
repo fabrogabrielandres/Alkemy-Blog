@@ -57,7 +57,7 @@ const Router = () => {
         <Route exact path="/us" component={About} />
         <Route exact path="/actividades" component={ActivitiesSection} />
         <Route exact path="/backoffice/news" component={NewsList} />
-        <Route exact path="/contacto" component={(contactInfo) => <ContactPage info={contactInfo} />} />
+        <Route exact path="/contacto" component={ContactPage} />
         <Route exact path="/novedades" component={NewsPage} />
       </Switch>
       <Footer />
