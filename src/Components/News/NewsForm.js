@@ -1,19 +1,15 @@
 import * as React from "react";
-import { Formik, Form} from "formik";
+import { Formik, Form } from "formik";
 import "../FormStyles.css";
 import axios from "axios";
 import { yupSchema as newsYupSchema } from "./yupSchema";
 import { requestDataCall as requestCategoriesData } from "./requestDataCall";
 import { CustomSelect as CategorySelect } from "./CustomSelect";
 import { FormField as Field } from "./FormField";
-import {
-  Button,
-  Input,
-  Text,
-  Flex,
-} from "@chakra-ui/react";
+import { Button, Input, Text, Flex } from "@chakra-ui/react";
 import { CustomCKEditor as SpanishCKEditor } from "./CKEditor";
 import { dataToBase64String } from "./dataToBase64String";
+
 export const NewsForm = ({
   name = "",
   content = "",
@@ -26,7 +22,8 @@ export const NewsForm = ({
   const API_BASE_URL = "http://ongapi.alkemy.org/public/api";
   const CREATE_NEWS_URL = API_BASE_URL + "/news#t53";
   const EDIT_NEWS_URL = API_BASE_URL + `/news/${id}#t53`;
-  const CATEGORIES_URL = API_BASE_URL + "/categories#t53";
+  const CATEGORIES_ENDPOINT = process.env.REACT_APP_ENDPOINT_CATEGORIES;
+  const CATEGORIES_URL = API_BASE_URL + CATEGORIES_ENDPOINT;
   const undefinedResponse = {
     success: undefined,
     data: undefined,
@@ -38,8 +35,8 @@ export const NewsForm = ({
   const [base64String, setBase64String] = React.useState("");
   React.useEffect(() => {
     requestCategoriesData(CATEGORIES_URL, setCategoriesResponseData);
-    editing &&  dataToBase64String({url: image }, setBase64String);
-  }, []);
+    editing && dataToBase64String({ url: image }, setBase64String);
+  }, [CATEGORIES_URL, editing, image]);
   const TitleField = () => (
     <Field
       label="Titulo"
@@ -92,11 +89,13 @@ export const NewsForm = ({
       validationSchema={newsYupSchema}
       onSubmit={async (values, { setSubmitting, setFieldError, resetForm }) => {
         let errors = {};
-        if(!values.image && !base64String) {errors.file = "Imagen requerida"};
+        if (!values.image && !base64String) {
+          errors.file = "Imagen requerida";
+        }
         let endpoint = editing ? EDIT_NEWS_URL : CREATE_NEWS_URL;
         let method = editing ? "put" : "post";
         const config = { headers: { "Content-Type": "application/json" } };
-        if(Object.keys(errors).length === 0) {
+        if (Object.keys(errors).length === 0) {
           try {
             const response = await axios[method](endpoint, values, config);
             console.log(response);
@@ -118,11 +117,11 @@ export const NewsForm = ({
       }}
     >
       {({ values, isSubmitting, setFieldValue }) => {
-          console.log(values);
+        console.log(values);
         function handleFileInput(event) {
           const file = event.target.files[0];
           setFieldValue("file", file);
-          dataToBase64String({ file }, setFieldValue,"image");
+          dataToBase64String({ file }, setFieldValue, "image");
         }
         return (
           <Flex justify="center" align="center" w="100%" h="100vh">
@@ -132,9 +131,7 @@ export const NewsForm = ({
                 <CategoryField />
                 <ContentField />
                 <FileField onChange={handleFileInput} />
-                <Button type="submit">
-                  {editing ? "Editar" : "Crear"}
-                </Button>
+                <Button type="submit">{editing ? "Editar" : "Crear"}</Button>
                 {(submitResponse.success !== undefined || isSubmitting) && (
                   <Text color="yellow.600" children={submitResponse.message} />
                 )}

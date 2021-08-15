@@ -1,6 +1,7 @@
 import { DELETE, GET, POST, PUT } from "../../Services/privateApiService"
+const CATEGORIES_ENDPOINT = process.env.REACT_APP_ENDPOINT_CATEGORIES;
 
-const urlBase = 'http://ongapi.alkemy.org/api/categories'
+const urlBase = 'http://ongapi.alkemy.org/api' + CATEGORIES_ENDPOINT
 
 export const getCategories = async (id) => {
   const getData = await GET(urlBase, id)
