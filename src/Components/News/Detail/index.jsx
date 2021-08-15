@@ -10,11 +10,9 @@ import {
 } from "@chakra-ui/react";
 import { GenericTitle } from "../../common/GenericTitle";
 import { News } from "./News";
-import axios from "axios";
+import { newsRequests } from "../../../Services/News/newsRequests";
 
 // Function que crea la URL a fetchear con el id correcto
-const getURL = (id) => `http://ongapi.alkemy.org/api/news/${id}`;
-
 // ID's validos cargados en la API de prueba:
 // 57, 58, 61, 62, 224, 230, 242, 248, 249
 
@@ -33,16 +31,16 @@ const Index = ({ title }) => {
 
   // GET a la API que trae la novedad a mostrar
   useEffect(() => {
-    if (id) {
       setLoading(true);
-      axios.get(getURL(id))
-        .then(res => {
-          setNews(res.data.data);
-          setError(false);
-          setLoading(false);
-        })
-        .catch(() => setError(true), setLoading(false))
-    }
+      newsRequests
+      .get(id)
+      .then((response) => {
+        console.log(response);
+        setNews(response.data);
+        setError(false);
+        setLoading(false);
+      })
+      .catch(() => setError(true));
   }, [id]);
 
   return (

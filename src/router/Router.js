@@ -69,12 +69,9 @@ const Router = () => {
         />
         <Route exact path="/backoffice/users" component={UsersList} />
         <Route exact path="/backoffice/users/create" component={UserForm} />
-        <Route
-          exact
-          path="/backoffice/users/edit/:id"
-          component={(news) => <NewsForm {...news} />}
-        />
-        <Route exact path="/backoffice/news/create" component={NewsForm} />
+        <Route exact path="/backoffice/users/:id" component={(data) => <UserForm user={data} />} />
+        <Route exact path="/backoffice/novedades/:id" component={(news) => <NewsForm {...news} />} />
+        <Route exact path="/backoffice/novedades/create" component={NewsForm} />
         <Route exact path="/backoffice/members" component={MembersList} />
         <Route
           exact
@@ -99,12 +96,12 @@ const Router = () => {
         <Route exact path="/gracias" component={ThanksComponent} />
         <Route
           exact
-          path="/backoffice/news/:id"
+          path="/novedades/:id"
           component={() => <NewsDetail title="Detalle de novedad" />}
         />
         <Route exact path="/us" component={About} />
         <Route exact path="/actividades" component={ActivitiesSection} />
-        <Route exact path="/backoffice/news" component={NewsList} />
+        <Route exact path="/backoffice/novedades" component={NewsList} />
         <Route
           exact
           path="/contacto"

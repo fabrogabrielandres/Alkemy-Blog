@@ -17,7 +17,7 @@ import {
   AlertDescription,
 } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
-import axios from "axios";
+import { newsRequests } from "../../Services/News/newsRequests";
 
 export const NewsList = () => {
   const [newsList, setNewsList] = useState([]);
@@ -27,9 +27,8 @@ export const NewsList = () => {
 
   const fetchNewsList = async () => {
     try {
-      let response = await axios.get("http://ongapi.alkemy.org/api/news#t53");
-
-      setNewsList(response.data.data);
+      let response = await newsRequests.get(null, true);
+      setNewsList(response.data);
       setLoading(false);
     } catch (error) {
       setError(

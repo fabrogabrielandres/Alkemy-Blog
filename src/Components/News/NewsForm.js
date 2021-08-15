@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Formik, Form } from "formik";
 import "../FormStyles.css";
-import axios from "axios";
 import { yupSchema as newsYupSchema } from "./yupSchema";
 import { requestDataCall as requestCategoriesData } from "./requestDataCall";
 import { CustomSelect as CategorySelect } from "./CustomSelect";
@@ -9,7 +8,7 @@ import { FormField as Field } from "./FormField";
 import { Button, Input, Text, Flex } from "@chakra-ui/react";
 import { CustomCKEditor as SpanishCKEditor } from "./CKEditor";
 import { dataToBase64String } from "./dataToBase64String";
-
+import { newsRequests } from "../../Services/News/newsRequests";
 export const NewsForm = ({
   name = "",
   content = "",
@@ -20,8 +19,6 @@ export const NewsForm = ({
 }) => {
   const editing = image;
   const API_BASE_URL = "http://ongapi.alkemy.org/public/api";
-  const CREATE_NEWS_URL = API_BASE_URL + "/news#t53";
-  const EDIT_NEWS_URL = API_BASE_URL + `/news/${id}#t53`;
   const CATEGORIES_ENDPOINT = process.env.REACT_APP_ENDPOINT_CATEGORIES;
   const CATEGORIES_URL = API_BASE_URL + CATEGORIES_ENDPOINT;
   const undefinedResponse = {
@@ -59,7 +56,7 @@ export const NewsForm = ({
       name="category_id"
       component={CategorySelect}
       placeholder="Select Category"
-      value={category_id}
+      defaultValue={category_id}
       {...categoriesResponseData}
     />
   );
@@ -87,19 +84,18 @@ export const NewsForm = ({
         id,
       }}
       validationSchema={newsYupSchema}
-      onSubmit={async (values, { setSubmitting, setFieldError, resetForm }) => {
+      onSubmit={async (values, { setFieldError, resetForm }) => {
         let errors = {};
         if (!values.image && !base64String) {
           errors.file = "Imagen requerida";
         }
-        let endpoint = editing ? EDIT_NEWS_URL : CREATE_NEWS_URL;
         let method = editing ? "put" : "post";
-        const config = { headers: { "Content-Type": "application/json" } };
+        const isPrivate = true;
         if (Object.keys(errors).length === 0) {
           try {
-            const response = await axios[method](endpoint, values, config);
+            const response = await newsRequests[method](values, isPrivate);
             console.log(response);
-            setSubmitResponse(response.data);
+            setSubmitResponse(response);
             resetForm();
           } catch (exception) {
             console.log(exception.response);
@@ -111,13 +107,9 @@ export const NewsForm = ({
           message = errors[field];
           setFieldError(field, message);
         }
-        setTimeout(() => {
-          setSubmitting(false);
-        }, 400);
       }}
     >
-      {({ values, isSubmitting, setFieldValue }) => {
-        console.log(values);
+      {({ isSubmitting, setFieldValue }) => {
         function handleFileInput(event) {
           const file = event.target.files[0];
           setFieldValue("file", file);
