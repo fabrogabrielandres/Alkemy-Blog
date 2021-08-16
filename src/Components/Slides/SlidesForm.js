@@ -5,7 +5,6 @@ import FormSlides from "./Form";
 import "../FormStyles.css";
 
 const SlidesForm = ({ match, setCallToForm }) => {
-  //console.log(match)
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
   const [exito, setExito] = useState(false);
@@ -15,9 +14,8 @@ const SlidesForm = ({ match, setCallToForm }) => {
   const { id } = useParams();
   useEffect(() => {
     setLoading(true);
-    if (id) {
-      //axios(`http://ongapi.alkemy.org/api/slides/${id}`)
-      getSlides(id)
+    if (id || match.id) {
+      getSlides(id ? id : match.id)
         .then((res) => {
           setData({
             nombre: res.data.data.name,

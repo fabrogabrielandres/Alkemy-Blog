@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-
+import { getSlides } from '../../../../Services/slidesApiService';
 import {
   Box,
   Image,
@@ -14,8 +13,6 @@ const Slides = () => {
   const [oneSlides, setOneSlides] = useState({});
   const [callToForm, setCallToForm] = useState(false);
 
-  const baseUrl = 'http://ongapi.alkemy.org/api';
-
   const goToEditSlide = (slides) => {
     setOneSlides(slides)
     setCallToForm(true)
@@ -24,7 +21,7 @@ const Slides = () => {
   useEffect(() => {
     const getDataToSliders = async () => {
       try {
-        const getResp = await axios.get(`${baseUrl}/slides`);
+        const getResp = await getSlides();
         const dataSlides = await getResp.data.data;
         setAllSlides(dataSlides);
       } catch (error) {

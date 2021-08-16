@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-
+import { getOrganizationData } from '../../../../Services/organizationApiService';
 import {
   Text,
   Button
@@ -14,10 +13,9 @@ const TextBackofficeHome = () => {
   const [openTextArea, setOpenTextArea] = useState(false)
   const [content, setContent] = useState('');
 
-
-  const getOrganizationData = async () => {
+  const getData = async () => {
     try {
-      const getData = await axios.get(`${baseURL}/organization`);
+      const getData = await getOrganizationData();
       const resData = await getData.data.data;
       setContent(resData);
     } catch (error) {
@@ -26,7 +24,7 @@ const TextBackofficeHome = () => {
   }
 
   useEffect(() => {
-    getOrganizationData()
+    getData()
   }, [])
 
   const editTextArea = () => {
