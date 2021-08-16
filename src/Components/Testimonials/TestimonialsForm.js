@@ -6,10 +6,7 @@ import { Button, FormLabel, Input, Text } from '@chakra-ui/react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
-
-
 export const TestimonialsForm = ({ testimonials }) => {
-
 
     const initialValues = {
         "name": "",
@@ -17,8 +14,6 @@ export const TestimonialsForm = ({ testimonials }) => {
         "image": "",
     }
 
-    
-    
     const convertirABase64 = (image) => {
         return new Promise((res, req) => {
             let reader = new FileReader();
@@ -29,6 +24,7 @@ export const TestimonialsForm = ({ testimonials }) => {
         }
         )
     }
+    
     return (
         <>
 
