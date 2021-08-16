@@ -30,18 +30,27 @@ Your app is ready to be deployed!
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
 
-###
- 
-From the react-content-loader library a skeleton loader is shown while the page is loading.
+### `external libraries`
 
-The Skeleton component can receive the following props,
-type: where I can choose between the following options (Card, Table, CheckBox, Text, Image, Dost, or default),
-and others to customize the previous ones that are (speed
-width
-height
-viewBox
-backgroundColor
-foregroundColor)
+* From the **react-content-loader** library a skeleton loader is shown while the page is loading.
+
+  The Skeleton component can receive the following props,
+  type: where I can choose between the following options (Card, Table, CheckBox, Text, Image, Dost, or default),
+  and others to customize the previous ones that are (speed
+  width
+  height
+  viewBox
+  backgroundColor
+  foregroundColor)
+
+* From **chakra UI** library we are using a spinner when content is still loading.
+
+  It's using two colors from our pallete, those colors are #9AE6B4 and #3182CE.
+  You may see the official documentation [here](https://chakra-ui.com/docs/feedback/spinner).
+
+
+
+
 
 
 
