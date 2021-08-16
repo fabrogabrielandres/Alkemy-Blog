@@ -1,8 +1,7 @@
 import * as React from "react";
-import axios from "axios";
+import { getPrivateUsers } from "../../Services/usersApiService";
 import { GenericList } from "../common/GenericList";
 import { Stack, Skeleton } from "@chakra-ui/react";
-import { API_BASE_URL } from "../../common/configurations";
 export const UsersList = () => {
   const undefinedResponse = {
     success: undefined,
@@ -14,8 +13,7 @@ export const UsersList = () => {
     React.useState(undefinedResponse);
 
   React.useEffect(() => {
-    axios
-      .get(API_BASE_URL + "/users")
+    getPrivateUsers()
       .then((response) => setUsersResponseData(response.data))
       .catch((error) => setUsersResponseData(error.response?.data));
   }, []);

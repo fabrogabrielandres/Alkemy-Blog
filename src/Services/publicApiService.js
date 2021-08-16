@@ -36,3 +36,15 @@ export const publicApiGet = async (URL, id = null) => {
     }
   }
 }
+
+export const publicApiPut = async (URL, data) => {
+  try {
+    const response = await axios.put(getURL(URL, null), data);
+    return response;
+  } catch (error) {
+    return {
+      msg: 'Ha ocurrido un error al realizar la peticion',
+      error
+    }
+  }
+}
