@@ -4,7 +4,6 @@ import {
   Spinner,
   Button,
   ButtonGroup,
-  Image,
   Table,
   Tbody,
   Td,
@@ -17,6 +16,7 @@ import {
   AlertDescription,
 } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
+import ImageLazy from "../LazyLoad";
 import { newsRequests } from "../../Services/News/newsRequests";
 
 export const NewsList = () => {
@@ -90,7 +90,7 @@ export const NewsList = () => {
                   <>
                     <Td>
                       <AspectRatio maxW="455px" ratio={1}>
-                        <Image src={news.image} boxSize="300px" alt="" />
+                        {<ImageLazy src={news.image} alt={news.name} boxSize="300px" />}
                       </AspectRatio>
                     </Td>
 

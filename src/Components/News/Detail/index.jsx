@@ -16,7 +16,7 @@ import { newsRequests } from "../../../Services/News/newsRequests";
 // ID's validos cargados en la API de prueba:
 // 57, 58, 61, 62, 224, 230, 242, 248, 249
 
-const Index = ({ title }) => {
+const NewsDetail = ({ title }) => {
   // Estado que guarda la novedad a mostrar
   const [news, setNews] = useState(null);
 
@@ -56,7 +56,7 @@ const Index = ({ title }) => {
           news && <News {...news} />
         }
         {loading && (
-          <div style={{alignItems:"center", justifyContent:"center", display:"flex"}}>
+          <div style={{ alignItems: "center", justifyContent: "center", display: "flex" }}>
             <Spinner
               thickness="4px"
               speed="0.65s"
@@ -81,7 +81,7 @@ const Index = ({ title }) => {
                 Novedad no encontrada!
               </AlertTitle>
               <AlertDescription maxWidth="sm">
-                Ocurrio un error con la novedad solicitada. 
+                Ocurrio un error con la novedad solicitada.
               </AlertDescription>
             </Alert>
           )
@@ -91,4 +91,4 @@ const Index = ({ title }) => {
   );
 };
 
-export default Index;
+export default NewsDetail;
