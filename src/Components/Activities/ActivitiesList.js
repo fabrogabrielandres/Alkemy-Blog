@@ -13,6 +13,7 @@ import {
   Button,
   Link,
 } from "@chakra-ui/react";
+import { ActivitiesAlert } from "./ActivitiesAlert";
 
 const ActivitiesList = () => {
   const [actividades, setActividades] = useState([]);
@@ -31,7 +32,7 @@ const ActivitiesList = () => {
       })
       .catch((error) => {
         setError(
-          "Ha ocurrido un error al conectar con el servidor. Intentelo de nuevo"
+          "Por favor intente reiniciar la página o reconcentarse más tarde."
         );
         setLoading(false);
       });
@@ -58,18 +59,7 @@ const ActivitiesList = () => {
           </Link>
         </GridItem>
       </Grid>
-      {error && (
-        <div>
-          <h4 style={{ textAlign: "center" }}>{error}</h4>
-          <Button
-            colorScheme="red"
-            size="sm"
-            onClick={() => (window.location.href = "/backoffice/activities")}
-          >
-            Recargar
-          </Button>
-        </div>
-      )}
+      {error && <ActivitiesAlert message={error} />}
       {loading && !exito && (
         <h4 style={{ textAlign: "center" }}>Cargando...</h4>
       )}
