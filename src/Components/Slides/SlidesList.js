@@ -1,23 +1,20 @@
 import * as React from "react";
-import axios from "axios";
 import { Stack, Skeleton } from "@chakra-ui/react";
-import { API_BASE_URL } from "../../common/configurations";
 import { GenericList } from "../common/GenericList";
-import { getSlides } from "../../Services/slidesApiService";
+import { useDispatch, useSelector } from "react-redux";
+import { listgetSlides } from "../../features/Slides/slidesSlice";
+import { useEffect } from "react";
 export const SlidesList = () => {
-  const undefinedResponse = {
-    success: undefined,
-    data: undefined,
-    errors: undefined,
-    message: "Petición en proceso",
-  };
-  const [slidesResponse, setSlidesResponse] = React.useState(undefinedResponse);
-  React.useEffect(() => {
-    getSlides()
-      .then((response) => setSlidesResponse(response.data))
-      .catch((error) => setSlidesResponse(error.response?.data));
-  }, []);
-  return slidesResponse.success ? (
+
+const dispatch = useDispatch()
+const listSlides = useSelector(state => state.slide.listSlides)
+
+useEffect(() => {
+  dispatch(listgetSlides())
+}, [dispatch])
+
+
+  return  listSlides.length>0 ?(
     <GenericList
       excludeFields={[
         "description",
@@ -28,12 +25,13 @@ export const SlidesList = () => {
         "deleted_at",
         "updated_at",
       ]}
-      data={slidesResponse.data}
+      data={listSlides}
       caption={"Lista de Slides"}
       type="things"
       endpoint="slides"
     />
-  ) : (
+   ) 
+  : (
     <Stack p="2%">
       <Skeleton height="20px" />
       <Skeleton height="20px" />
