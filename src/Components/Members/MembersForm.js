@@ -17,8 +17,9 @@ export const MembersForm = ({
   id = "",
 }) => {
   const editing = Boolean(id);
-  const CREATE_MEMBERS_URL = API_BASE_URL + "/members#t53";
-  const EDIT_MEMBERS_URL = API_BASE_URL + `/members/${id}#t53`;
+  const pathMembers = process.env.REACT_APP_API_MEMBERS;
+  const CREATE_MEMBERS_URL = API_BASE_URL + pathMembers;
+  const EDIT_MEMBERS_URL = API_BASE_URL + `${pathMembers}/${id}`;
   const undefinedResponse = {
     success: undefined,
     data: undefined,

@@ -4,7 +4,8 @@ import axios from "axios";
 import { API_BASE_URL } from "../../common/configurations";
 import { GenericList } from "../common/GenericList";
 const getMembersListHandler = async (setMembersResponse) => {
-  const MEMBERS_LIST_URL = API_BASE_URL + "/members#t53";
+  const pathMembers = process.env.REACT_APP_API_MEMBERS;
+  const MEMBERS_LIST_URL = API_BASE_URL + pathMembers;
   let data = undefined;
   try {
     const response = await axios.get(MEMBERS_LIST_URL);
@@ -29,14 +30,15 @@ export const MembersList = () => {
   }, []);
   return membersResponse.success ? (
     <GenericList
-      excludeFields={["description", "group_id",
+      excludeFields={[
+        "description",
+        "group_id",
         "id",
         "facebookUrl",
         "linkedinUrl",
         "created_at",
         "deleted_at",
         "updated_at",
-
       ]}
       data={membersResponse.data}
       caption={"Lista de Miembros"}
