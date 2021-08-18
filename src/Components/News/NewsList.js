@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   AspectRatio,
   Spinner,
@@ -16,36 +16,27 @@ import {
   AlertDescription,
 } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
+import { requestNews } from "./newsReducer";
+import { useSelector, useDispatch } from "react-redux";
 import ImageLazy from "../LazyLoad";
-import { newsRequests } from "../../Services/News/newsRequests";
 
 export const NewsList = () => {
-  const [newsList, setNewsList] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const dispatch = useDispatch();
+  const {
+    news: { success = undefined, data = [], message = "Something went wrong." },
+    status,
+  } = useSelector((state) => {
+    return state.news;
+  });
   const histoy = useHistory();
 
-  const fetchNewsList = async () => {
-    try {
-      let response = await newsRequests.get(null, true);
-      setNewsList(response.data);
-      setLoading(false);
-    } catch (error) {
-      setError(
-        "Ha ocurrido un error al realizar la peticion. Intentelo de nuevo"
-      );
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    setLoading(true);
-    fetchNewsList();
-  }, []);
+    dispatch(requestNews({ id: null, isPrivate: true }));
+  }, [dispatch]);
 
   return (
     <>
-      {error && (
+      {(status === "failed" || success === false) && (
         <Alert
           status="error"
           height="200px"
@@ -59,15 +50,15 @@ export const NewsList = () => {
           <AlertTitle mt={4} mb={1} fontSize="lg">
             Opss!!
           </AlertTitle>
-          <AlertDescription maxWidth="sm">{error}</AlertDescription>
+          <AlertDescription maxWidth="sm">{message}</AlertDescription>
         </Alert>
       )}
-      {!loading ? (
+      {status === "success" && success ? (
         <Table variant="simple">
           <Thead>
             <Tr>
               <Th>
-                {!error && newsList ? (
+                {success && data ? (
                   <Button
                     onClick={() => histoy.push("/backoffice/news/create")}
                   >
@@ -84,13 +75,19 @@ export const NewsList = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {newsList ? (
-              newsList.map((news, key) => (
+            {data ? (
+              data.map((news, key) => (
                 <Tr key={key}>
                   <>
                     <Td>
                       <AspectRatio maxW="455px" ratio={1}>
-                        {<ImageLazy src={news.image} alt={news.name} boxSize="300px" />}
+                        {
+                          <ImageLazy
+                            src={news.image}
+                            alt={news.name}
+                            boxSize="300px"
+                          />
+                        }
                       </AspectRatio>
                     </Td>
 

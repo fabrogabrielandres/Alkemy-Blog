@@ -2,7 +2,7 @@ import * as React from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import "@ckeditor/ckeditor5-build-classic/build/translations/es";
-export const CustomCKEditor = ({ newsContent, setValue }) => {
+export const CustomCKEditor = ({ newsContent, setValue, setTouched }) => {
   return (
     <CKEditor
       editor={ClassicEditor}
@@ -10,20 +10,18 @@ export const CustomCKEditor = ({ newsContent, setValue }) => {
       config={{
         language: "es",
       }}
-      onReady={(editor) => {
-        //console.log("Editor is ready to use!", editor);
-      }}
+      onReady={(editor) => {}}
       onChange={(event, editor) => {
         const data = editor.getData();
         setValue(data);
-        //console.log("where's the data?", data);
       }}
       onBlur={(event, editor) => {
-        //console.log("Blur.", editor);
+        setTouched(true);
+        const data = editor.getData();
+        const e = editor.ui.element;
+        e.style.border = data.length ? "" : "2px solid red";
       }}
-      onFocus={(event, editor) => {
-        //console.log("Focus.", editor);
-      }}
+      onFocus={(event, editor) => {}}
     />
   );
 };
