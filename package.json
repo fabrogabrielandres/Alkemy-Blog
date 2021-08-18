@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@brainhubeu/react-carousel": "^2.0.4",
+    "@chakra-ui/icons": "^1.0.15",
     "@chakra-ui/react": "^1.6.0",
     "@ckeditor/ckeditor5-build-classic": "^29.0.0",
     "@ckeditor/ckeditor5-react": "^3.0.2",
