@@ -2,29 +2,27 @@ import React, { useState, useEffect } from "react";
 import { GenericTitle } from "../common/GenericTitle";
 import NewsCardList from "./NewsCardList";
 import Pagination from "./Pagination";
-import { newsRequests } from "../../Services/News/newsRequests";
-
+import { requestNews } from "./newsReducer";
+import { useSelector, useDispatch } from "react-redux";
 const NewsPage = () => {
-  const [list, setList] = useState([]);
-
+  const dispatch = useDispatch();
+  const {
+    news: { success = undefined, data = [], message = "Something went wrong." },
+    status,
+  } = useSelector((state) => {
+    return state.news;
+  });
   // Counts the number of pages
   const [currentPage, setCurrentPage] = useState(1);
-
   // By changing this initial value, you set how many items per page would you like to show.
   const [itemsPerPage] = useState(5);
-
   useEffect(() => {
-    newsRequests
-      .get()
-      .then((result) => setList(result.data.reverse()))
-      .catch((err) => console.error(err));
-  }, []);
-
+    dispatch(requestNews({ id: null, isPrivate: true }));
+  }, [dispatch]);
   // Getting current items to paginate them
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = list.slice(indexOfFirstItem, indexOfLastItem);
-
+  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -34,7 +32,7 @@ const NewsPage = () => {
       <NewsCardList news={currentItems} />
       <Pagination
         itemsPerPage={itemsPerPage}
-        totalItems={list.length}
+        totalItems={data.length}
         paginate={paginate}
       />
     </div>

@@ -9,10 +9,7 @@ export const GET = async (URL, id = null) => {
     const response = await axiosInstance.get(getURL(URL, id));
     return response;
   } catch (error) {
-    return {
-      msg: "Error al realizar la peticion GET",
-      error,
-    };
+    return error.response;
   }
 };
 

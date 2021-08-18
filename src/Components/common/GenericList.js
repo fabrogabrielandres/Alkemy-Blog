@@ -16,6 +16,7 @@ import {
 import { Link as RouterLink } from "react-router-dom";
 import { TiUserDelete } from "react-icons/ti";
 import { FaUserEdit } from "react-icons/fa";
+import { BaseAlertDialog as DeleteAlertDialog } from "./GenericAlert";
 
 function translateToSpanish(tableHeaderName, type) {
   return tableHeaderName
@@ -109,25 +110,34 @@ export const GenericTableBody = ({
   return <Tbody {...TbProps} children={<TableRows />} />;
 };
 
-const ActionLinks = ({ endpoint, id }) => {
+const ActionLinks = ({ endpoint, datum }) => {
   const LinkContents = ({ Icon = () => null, text = "" }) => (
     <Flex justify="center" align="center">
       <Icon size={24} /> {text}
     </Flex>
   );
   return (
-    <React.Fragment>
+    <>
       <ChakraUILink
         as={RouterLink}
-        to={`/backoffice/${endpoint}/${id}`}
+        to={`/backoffice/${endpoint}/${datum.id}`}
         children={<LinkContents Icon={FaUserEdit} />}
       />
-      <ChakraUILink
-        as={RouterLink}
-        to={`/backoffice/${endpoint}/${id}`}
-        children={<LinkContents Icon={TiUserDelete} />}
+      <DeleteAlertDialog
+        onCancel={() => null}
+        onConfirm={
+          () =>
+            alert(
+              "Se borró hipotéticamente " + datum.name
+            ) /* the idea is to dispatch a delete request here */
+        }
+        resourceName={datum.name}
+        actionName="Eliminar"
+        descrption="Estas por borrar PERMANENTEMENTE un miembro"
+        buttonStyles={{ bgColor: "red", color: "white" }}
+        Component={<LinkContents Icon={TiUserDelete} />}
       />
-    </React.Fragment>
+    </>
   );
 };
 /**
@@ -150,8 +160,7 @@ const TableRowCells = ({
       p="1"
       verticalAlign="middle"
       textAlign="center"
-      key={`${parentKey}th#${datum.length}`}
-      children={<ActionLinks endpoint={endpoint} id={datum.id} />}
+      children={<ActionLinks {...{ endpoint, datum }} />}
     />
   );
   return Object.entries(datum)
@@ -191,7 +200,11 @@ const TableRowCells = ({
         />
       );
     }) // appends action rows for each row entry
-    .concat(excludeFields.includes("acciones") ? null : <ActionsCell />);
+    .concat(
+      excludeFields.includes("acciones") ? null : (
+        <ActionsCell key={`${parentKey}th#${datum.length}`} />
+      )
+    );
 };
 
 /**

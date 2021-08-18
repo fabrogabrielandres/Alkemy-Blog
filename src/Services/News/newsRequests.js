@@ -9,7 +9,7 @@ const response = async (callback = async () => null, ...args) =>
   (await callback(NewsUrl.path, ...args)).data;
 
 export const newsRequests = {
-  get: ({ id = null, isPrivate = false }, thunkAPI = null) => {
+  get: ({ id = null, isPrivate = false } = {}, _thunkAPI = null) => {
     return response(isPrivate ? privateApi.GET : publicApiGet, id);
   },
   post: (data = null, isPrivate = false) =>
