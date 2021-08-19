@@ -1,19 +1,21 @@
-import React from "react";
+import React, { useEffect } from 'react';
 import {
-  Flex,
-  Text,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalBody,
-  ModalCloseButton,
-  Button,
-  useDisclosure,
-} from "@chakra-ui/react";
-import ImageLazy from "../../LazyLoad";
+  Flex, Text,
+  Modal, ModalOverlay, ModalContent,
+  ModalBody, ModalCloseButton, Button,
+  useDisclosure
+} from '@chakra-ui/react';
+import ImageLazy from '../../LazyLoad';
 import { GenericTitle } from "../../common/GenericTitle";
-export const News = ({ name, content, image }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+export const News = ({ name, content, image, setHeightBox }) => {
+
+  // Manejo del Modal
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
+  useEffect(() => {
+    setHeightBox(document.querySelector('#box').clientHeight);
+  }, [setHeightBox])
+
 
   return (
     <Flex flexDirection="column" alignItems="center">
@@ -21,7 +23,7 @@ export const News = ({ name, content, image }) => {
       <Text fontSize="xl" w={["90%", "80%", "70%"]} my={6} minH="30vh">
         {content.replace("<p>", "").replace("</p>", "")}
       </Text>
-      <Button onClick={onOpen} bg="green.400">
+      <Button onClick={onOpen} bg="green.400" id='box'>
         Ver imagen
       </Button>
       <Modal
