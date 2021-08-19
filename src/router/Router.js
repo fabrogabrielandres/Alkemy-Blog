@@ -25,6 +25,7 @@ import NewsList from "../Components/News/NewsList";
 import ContactPage from "../Components/Contact/ContactPage";
 import { FormCategories } from "../Components/Categories/FormCategories";
 import NewsPage from "../Components/News/NewsPage";
+import NotFound from "../Components/NotFound";
 
 const Router = () => {
   return (
@@ -116,6 +117,7 @@ const Router = () => {
           component={(contactInfo) => <ContactPage info={contactInfo} />}
         />
         <Route exact path="/novedades" component={NewsPage} />
+        <Route component={NotFound} />
       </Switch>
       <Footer />
     </BrowserRouter>
