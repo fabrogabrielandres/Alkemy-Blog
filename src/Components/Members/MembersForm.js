@@ -1,13 +1,13 @@
 import * as React from "react";
 import { Formik, Form } from "formik";
 import "../FormStyles.css";
-import axios from "axios";
 import { yupSchema as membersYupSchema } from "./yupSchema";
 import { FormField as Field } from "./FormField";
 import { Button, Input, Text, Flex, Image } from "@chakra-ui/react";
 import { MembersCKEditor } from "./MembersCKEditor";
 import { dataToBase64String } from "../News/dataToBase64String";
-import { API_BASE_URL } from "../../common/configurations";
+import { postPrivateMembers, putPrivateMembers } from "../../Services/membersApiService";
+import { URL as API_BASE_URL } from "../../Services/membersApiService";
 export const MembersForm = ({
   name = "",
   description = "",
@@ -28,7 +28,7 @@ export const MembersForm = ({
   const [submitResponse, setSubmitResponse] = React.useState(undefinedResponse);
   const [base64String, setBase64String] = React.useState("");
   React.useEffect(() => {
-    //editing &&  dataToBase64String({url: image }, setBase64String);
+    editing && dataToBase64String({ url: image }, setBase64String);
   }, []);
   const NameField = () => (
     <Field
@@ -107,23 +107,20 @@ export const MembersForm = ({
         if (!values.image && !base64String) {
           errors.file = "Imagen requerida";
         }
-        let endpoint = editing ? EDIT_MEMBERS_URL : CREATE_MEMBERS_URL;
-        let method = editing ? "put" : "post";
-        const config = {
-          headers: { "Content-Type": "application/json" },
-        };
         if (Object.keys(errors).length === 0) {
           try {
-            const response = await axios[method](endpoint, values, config);
-            console.log(response);
-            setSubmitResponse(response.data);
+
+            if (editing) {
+              putPrivateMembers(id, values).then(resp => { setSubmitResponse(resp.data); console.log(resp) })
+            } else {
+              postPrivateMembers(values).then(resp => { setSubmitResponse(resp.data); console.log(resp) })
+            }
             resetForm();
           } catch (exception) {
             console.log(exception.response);
           }
         }
         let message = "";
-        // add any server errors
         for (let field in errors) {
           message = errors[field];
           setFieldError(field, message);
