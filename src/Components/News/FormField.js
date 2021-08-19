@@ -34,17 +34,18 @@ export const FormField = ({
       )}
       <InputGroup spacing="0" as={Stack}>
         <Element {...field} {...optionalProps} {...props} />
-        <InputRightElement
-          children={
-            showErrorIcon &&
-            validity && (
-              <TiInfoOutline
-                style={{ backgroundColor: label === "Imagen" ? "" : "white" }}
-                color="red"
-              />
-            )
-          }
-        />
+        {showErrorIcon && (
+          <InputRightElement
+            children={
+              validity && (
+                <TiInfoOutline
+                  style={{ backgroundColor: label === "Imagen" ? "" : "white" }}
+                  color="red"
+                />
+              )
+            }
+          />
+        )}
       </InputGroup>
       {showErrorMessage && <FormErrorMessage>{meta.error}</FormErrorMessage>}
     </FormControl>
