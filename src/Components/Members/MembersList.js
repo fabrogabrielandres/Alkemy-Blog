@@ -1,34 +1,18 @@
 import * as React from "react";
 import { Stack, Skeleton } from "@chakra-ui/react";
-import axios from "axios";
-import { API_BASE_URL } from "../../common/configurations";
 import { GenericList } from "../common/GenericList";
-const getMembersListHandler = async (setMembersResponse) => {
-  const pathMembers = process.env.REACT_APP_API_MEMBERS;
-  const MEMBERS_LIST_URL = API_BASE_URL + pathMembers;
-  let data = undefined;
-  try {
-    const response = await axios.get(MEMBERS_LIST_URL);
-    data = response.data;
-  } catch (exception) {
-    console.log(exception);
-    data = exception.response.data;
-  }
-  setMembersResponse(data);
-};
-export const MembersList = () => {
-  const undefinedResponse = {
-    success: undefined,
-    data: undefined,
-    errors: undefined,
-    message: "Petición en proceso",
-  };
-  const [membersResponse, setMembersResponse] =
-    React.useState(undefinedResponse);
-  React.useEffect(() => {
-    getMembersListHandler(setMembersResponse);
-  }, []);
-  return membersResponse.success ? (
+import { useDispatch, useSelector } from "react-redux";
+import { listgetMembers } from "../../features/Members/membersSlice";
+import { useEffect } from "react";
+export const MemberList = () => {
+  const dispatch = useDispatch();
+  const listMembers = useSelector((state) => state.members.listMembers);
+
+  useEffect(() => {
+    dispatch(listgetMembers());
+  }, [dispatch]);
+
+  return listMembers.length > 0 ? (
     <GenericList
       excludeFields={[
         "description",
@@ -40,8 +24,9 @@ export const MembersList = () => {
         "deleted_at",
         "updated_at",
       ]}
-      data={membersResponse.data}
+      data={listMembers}
       caption={"Lista de Miembros"}
+      type="things"
       endpoint="members"
     />
   ) : (

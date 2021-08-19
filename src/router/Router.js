@@ -4,7 +4,7 @@ import { HomeBackoffice } from "../pages/backoffice/home";
 import { NewsForm } from "../Components/News/NewsForm";
 import { MembersForm } from "../Components/Members/MembersForm";
 import { UsersList } from "../Components/Users/UsersList";
-import { MembersList } from "../Components/Members/MembersList";
+import { MemberList } from "../Components/Members/MembersList";
 import { UserForm } from "../Components/Users/UserForm";
 import { ActivitiesForm } from "../Components/Activities/ActivitiesForm";
 import NewsDetail from "../Components/News/Detail";
@@ -69,10 +69,18 @@ const Router = () => {
         />
         <Route exact path="/backoffice/users" component={UsersList} />
         <Route exact path="/backoffice/users/create" component={UserForm} />
-        <Route exact path="/backoffice/users/:id" component={(data) => <UserForm user={data} />} />
-        <Route exact path="/backoffice/novedades/:id" component={(news) => <NewsForm {...news} />} />
+        <Route
+          exact
+          path="/backoffice/users/:id"
+          component={(data) => <UserForm user={data} />}
+        />
+        <Route
+          exact
+          path="/backoffice/novedades/:id"
+          component={(news) => <NewsForm {...news} />}
+        />
         <Route exact path="/backoffice/novedades/create" component={NewsForm} />
-        <Route exact path="/backoffice/members" component={MembersList} />
+        <Route exact path="/backoffice/members" component={MemberList} />
         <Route
           exact
           path="/backoffice/members/create"
