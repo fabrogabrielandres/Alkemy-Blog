@@ -1,5 +1,12 @@
 import React from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+import { HomeBackoffice } from "../pages/backoffice/home";
+import { NewsForm } from "../Components/News/NewsForm";
+import { MembersForm } from "../Components/Members/MembersForm";
+import { UsersList } from "../Components/Users/UsersList";
+import { MemberList } from "../Components/Members/MembersList";
+import { UserForm } from "../Components/Users/UserForm";
+import { ActivitiesForm } from "../Components/Activities/ActivitiesForm";
 import NewsDetail from "../Components/News/Detail";
 import Detail from "../Components/Activities/Detail";
 import Footer from "../Components/Footer/Footer";
@@ -13,10 +20,20 @@ import ContactPage from "../Components/Contact/ContactPage";
 import NewsPage from "../Components/News/NewsPage";
 import NotFound from "../Components/NotFound";
 
-const Router = () => {
+import { AnimatedSwitch} from 'react-router-transition';
+
+import {mapStyles, bounceTransition} from './transitions';
+
+const Router = () => {  
+
   return (
     <BrowserRouter>
-      <Switch>
+      <AnimatedSwitch
+        atEnter={bounceTransition.atEnter}
+        atLeave={bounceTransition.atLeave}
+        atActive={bounceTransition.atActive}
+        mapStyles={mapStyles}
+      >
         <Route exact path="/" component={Home} />
         <Route path="/backoffice" component={BackOfficeLayout} />
         <Route
@@ -44,7 +61,7 @@ const Router = () => {
         />
         <Route exact path="/novedades" component={NewsPage} />
         <Route component={NotFound} />
-      </Switch>
+      </AnimatedSwitch>
       <Footer />
     </BrowserRouter>
   );

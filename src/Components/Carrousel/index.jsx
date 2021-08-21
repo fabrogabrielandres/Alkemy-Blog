@@ -60,7 +60,7 @@ const Carrousel = () => {
         <Dots
           number={slides.length}
           thumbnails={slides.map(slide => (
-            <Box w='20%' ml='auto' mr='auto' boxShadow="2xl">
+            <Box w='20%' boxShadow="2xl">
               <Image src={slide.image} />
             </Box>
           ))}
