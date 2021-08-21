@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import facebookIcon from "./icons/facebook-icon.png";
 import linkedinIcon from "./icons/linkedin-icon.png";
-import { useSelector, useDispatch } from "react-redux";
-import { getUs } from "../../features/Us/usSlice";
 
 import {
   Table,
@@ -16,13 +14,8 @@ import {
   Link,
 } from "@chakra-ui/react";
 
-const Members = () => {
-  const dispatch = useDispatch();
-  const { us } = useSelector((state) => state.us);
-
-  useEffect(() => {
-    dispatch(getUs());
-  }, [dispatch]);
+const Members = ({us}) => {
+ 
 
   return (
     <Container maxW="container.lg">

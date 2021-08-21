@@ -6,7 +6,7 @@ export const getUs = createAsyncThunk(
   async (dispatch, getState) => {
     return await axios
       .get("http://ongapi.alkemy.org/api/members")
-      .then((res) => res.data.data);
+      .then((res) => res);
   }
 );
 
@@ -21,8 +21,9 @@ const usSlice = createSlice({
       state.status = "loading";
     },
     [getUs.fulfilled]: (state, action) => {
+      console.log(action.payload);
       state.status = "success";
-      state.us = action.payload;
+      state.us = action.payload.data.data;
     },
     [getUs.rejected]: (state, action) => {
       state.status = "failed";
