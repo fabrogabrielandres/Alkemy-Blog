@@ -1,11 +1,11 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
 import {
-  Button,
-  Container,
-  Input,
-  Textarea
-} from "@chakra-ui/react";
+	Button,
+	Container,
+	Input,
+	Textarea
+} from '@chakra-ui/react';
 import { postContacts } from '../../Services/contactsApiService';
 
 import CustomField from './CustomField';
@@ -13,54 +13,54 @@ import { SignupSchema } from './ValidationSchema';
 
 const ContactForm = () => {
 
-  return (
+	return (
 
-    <div>
-      <Formik
+		<div>
+			<Formik
 
-        initialValues={{
-          name: '',
-          email: '',
-          phone: '',
-          message: ''
-        }}
+				initialValues={{
+					name: '',
+					email: '',
+					phone: '',
+					message: ''
+				}}
 
-        validationSchema={SignupSchema}
+				validationSchema={SignupSchema}
 
-        onSubmit={(values) => {
+				onSubmit={(values) => {
 
-          const body = {
-            ...values,
-            phone: String(values.phone)
-          }
+					const body = {
+						...values,
+						phone: String(values.phone)
+					};
 
-          postContacts(body)
-            .then(response => console.log(response))
-            .catch(err => console.log(err))
+					postContacts(body)
+						.then(response => console.log(response))
+						.catch(err => console.log(err));
 
-        }}
-      >
+				}}
+			>
 
-        {() => (
-          <Form>
-            <Container>
+				{() => (
+					<Form>
+						<Container>
 
-              <CustomField fieldType={Input} name="name" label="Nombre" />
+							<CustomField fieldType={Input} name="name" label="Nombre" />
 
-              <CustomField fieldType={Input} name="email" type="email" label="Email" />
+							<CustomField fieldType={Input} name="email" type="email" label="Email" />
 
-              <CustomField fieldType={Input} name="phone" type="number" label="Celular" placeholder="Prefijo y número sin espacios ni guiones. Ej: 1156473829" />
+							<CustomField fieldType={Input} name="phone" type="number" label="Celular" placeholder="Prefijo y número sin espacios ni guiones. Ej: 1156473829" />
 
-              <CustomField fieldType={Textarea} name='message' label="Mensaje" />
+							<CustomField fieldType={Textarea} name='message' label="Mensaje" />
 
-              <CustomField fieldType={Button} name='button' type="submit">Enviar</CustomField>
+							<CustomField fieldType={Button} name='button' type="submit">Enviar</CustomField>
 
-            </Container>
-          </Form>
-        )}
-      </Formik>
-    </div>
-  )
+						</Container>
+					</Form>
+				)}
+			</Formik>
+		</div>
+	);
 };
 
-export default ContactForm
+export default ContactForm;

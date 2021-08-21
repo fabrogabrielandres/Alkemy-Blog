@@ -3,6 +3,16 @@ import React from 'react';
 import ScriptTag from 'react-script-tag';
 
 const MercadoPago = () => {
+<<<<<<< HEAD
+	return (
+		<>
+			<button style={{height:50, width:50}} id="close-image">
+				<img alt="" src="https://img.icons8.com/color/50/000000/mercado-pago.png" />
+			</button>
+		</>
+	);
+};
+=======
     return (
       <Box>
       <button style={{height:50, width:50}} id="close-image">
@@ -15,5 +25,6 @@ const MercadoPago = () => {
       </Box>
     );
   }
+>>>>>>> 88482920b12ff735da58af911ab10eff426b35b5
   
-  export default MercadoPago;
+export default MercadoPago;

@@ -9,6 +9,15 @@ import { Box } from "@chakra-ui/react";
 import { ErrorAlert } from "../common/GenericAlert";
 
 const About = () => {
+<<<<<<< HEAD
+	return (
+		<>
+			<AboutTitle text='Nosotros' />
+			<AboutUs text='Text dinamico obtenido desde la API' />
+			<Members/>
+		</>
+	);
+=======
   const [loading, setLoading] = useState(null);
   const { us } = useSelector((state) => state.us);
   const dispatch = useDispatch();
@@ -31,6 +40,7 @@ const About = () => {
   ) : (
     <ErrorAlert title={"error"} description={"Problemas al cargar los datos..."} />
   );
+>>>>>>> 88482920b12ff735da58af911ab10eff426b35b5
 };
 
 export default About;

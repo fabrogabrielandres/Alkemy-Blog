@@ -9,7 +9,7 @@
  * @todo Test Zepto
  * @todo stagePadding calculate wrong active classes
  */
-;(function($, window, document, undefined) {
+(function($, window, document, undefined) {
 
 	var drag, state, e;
 
@@ -332,7 +332,7 @@
 			css = { 'width': this.settings.autoWidth ? 'auto' : width - this.settings.margin };
 			css[this.settings.rtl ? 'margin-left' : 'margin-right'] = this.settings.margin;
 
-			if (!this.settings.autoWidth && $.grep(this._mergers, function(v) { return v > 1 }).length > 0) {
+			if (!this.settings.autoWidth && $.grep(this._mergers, function(v) { return v > 1; }).length > 0) {
 				for (i = 0, n = this._coordinates.length; i < n; i++) {
 					css.width = Math.abs(this._coordinates[i]) - Math.abs(this._coordinates[i - 1] || 0) - this.settings.margin;
 					this.$stage.children().eq(i).css(css);
@@ -510,7 +510,7 @@
 
 		if (!event.data) {
 			event.data = $('<' + this.settings.itemElement + '/>')
-				.addClass(this.settings.itemClass).append(item)
+				.addClass(this.settings.itemClass).append(item);
 		}
 
 		this.trigger('prepared', { content: event.data });
@@ -525,7 +525,7 @@
 	Owl.prototype.update = function() {
 		var i = 0,
 			n = this._pipe.length,
-			filter = $.proxy(function(p) { return this[p] }, this._invalidated),
+			filter = $.proxy(function(p) { return this[p]; }, this._invalidated),
 			cache = {};
 
 		while (i < n) {
@@ -547,11 +547,11 @@
 	Owl.prototype.width = function(dimension) {
 		dimension = dimension || Owl.Width.Default;
 		switch (dimension) {
-			case Owl.Width.Inner:
-			case Owl.Width.Outer:
-				return this._width;
-			default:
-				return this._width - this.settings.stagePadding * 2 + this.settings.margin;
+		case Owl.Width.Inner:
+		case Owl.Width.Outer:
+			return this._width;
+		default:
+			return this._width - this.settings.stagePadding * 2 + this.settings.margin;
 		}
 	};
 
@@ -655,13 +655,13 @@
 	Owl.prototype.eventsRouter = function(event) {
 		var type = event.type;
 
-		if (type === "mousedown" || type === "touchstart") {
+		if (type === 'mousedown' || type === 'touchstart') {
 			this.onDragStart(event);
-		} else if (type === "mousemove" || type === "touchmove") {
+		} else if (type === 'mousemove' || type === 'touchmove') {
 			this.onDragMove(event);
-		} else if (type === "mouseup" || type === "touchend") {
+		} else if (type === 'mouseup' || type === 'touchend') {
 			this.onDragEnd(event);
-		} else if (type === "touchcancel") {
+		} else if (type === 'touchcancel') {
 			this.onDragEnd(event);
 		}
 	};
@@ -675,15 +675,15 @@
 			isTouchIE = isTouchSupportIE();
 
 		if (this.settings.mouseDrag){
-			this.$stage.on('mousedown', $.proxy(function(event) { this.eventsRouter(event) }, this));
-			this.$stage.on('dragstart', function() { return false });
-			this.$stage.get(0).onselectstart = function() { return false };
+			this.$stage.on('mousedown', $.proxy(function(event) { this.eventsRouter(event); }, this));
+			this.$stage.on('dragstart', function() { return false; });
+			this.$stage.get(0).onselectstart = function() { return false; };
 		} else {
 			this.$element.addClass('owl-text-select-on');
 		}
 
 		if (this.settings.touchDrag && !isTouchIE){
-			this.$stage.on('touchstart touchcancel', $.proxy(function(event) { this.eventsRouter(event) }, this));
+			this.$stage.on('touchstart touchcancel', $.proxy(function(event) { this.eventsRouter(event); }, this));
 		}
 
 		// catch transitionEnd event
@@ -756,11 +756,11 @@
 
 		// to do/check
 		// prevent links and images dragging;
-		if (this.drag.targetEl.tagName === "IMG" || this.drag.targetEl.tagName === "A") {
+		if (this.drag.targetEl.tagName === 'IMG' || this.drag.targetEl.tagName === 'A') {
 			this.drag.targetEl.draggable = false;
 		}
 
-		$(document).on('mousemove.owl.dragEvents mouseup.owl.dragEvents touchmove.owl.dragEvents touchend.owl.dragEvents', $.proxy(function(event) {this.eventsRouter(event)},this));
+		$(document).on('mousemove.owl.dragEvents mouseup.owl.dragEvents touchmove.owl.dragEvents touchend.owl.dragEvents', $.proxy(function(event) {this.eventsRouter(event);},this));
 	};
 
 	/**
@@ -851,7 +851,7 @@
 		this.trigger('dragged');
 
 		// prevent links and images dragging;
-		this.drag.targetEl.removeAttribute("draggable");
+		this.drag.targetEl.removeAttribute('draggable');
 
 		// remove drag event listeners
 
@@ -1045,7 +1045,7 @@
 	 */
 	Owl.prototype.invalidate = function(part) {
 		this._invalidated[part] = true;
-	}
+	};
 
 	/**
 	 * Resets the absolute position of the current item.
@@ -1134,7 +1134,7 @@
 				maximum = ++i;
 			}
 		} else {
-			throw 'Can not detect maximum absolute position.'
+			throw 'Can not detect maximum absolute position.';
 		}
 
 		return maximum;
@@ -1193,13 +1193,13 @@
 	Owl.prototype.clones = function(position) {
 		var odd = this._clones.length / 2,
 			even = odd + this._items.length,
-			map = function(index) { return index % 2 === 0 ? even + index / 2 : odd - (index + 1) / 2 };
+			map = function(index) { return index % 2 === 0 ? even + index / 2 : odd - (index + 1) / 2; };
 
 		if (position === undefined) {
-			return $.map(this._clones, function(v, i) { return map(i) });
+			return $.map(this._clones, function(v, i) { return map(i); });
 		}
 
-		return $.map(this._clones, function(v, i) { return v === position ? map(i) : null });
+		return $.map(this._clones, function(v, i) { return v === position ? map(i) : null; });
 	};
 
 	/**
@@ -1541,7 +1541,7 @@
 			this.$stage.off('mousedown touchstart touchcancel');
 			$(document).off('.owl.dragEvents');
 			this.$stage.get(0).onselectstart = function() {};
-			this.$stage.off('dragstart', function() { return false });
+			this.$stage.off('dragstart', function() { return false; });
 		}
 
 		// remove event handlers in the ".owl.carousel" namespace
@@ -1566,16 +1566,16 @@
 	Owl.prototype.op = function(a, o, b) {
 		var rtl = this.settings.rtl;
 		switch (o) {
-			case '<':
-				return rtl ? a > b : a < b;
-			case '>':
-				return rtl ? a < b : a > b;
-			case '>=':
-				return rtl ? a <= b : a >= b;
-			case '<=':
-				return rtl ? a >= b : a <= b;
-			default:
-				break;
+		case '<':
+			return rtl ? a > b : a < b;
+		case '>':
+			return rtl ? a < b : a > b;
+		case '>=':
+			return rtl ? a <= b : a >= b;
+		case '<=':
+			return rtl ? a >= b : a <= b;
+		default:
+			break;
 		}
 	};
 
@@ -1621,14 +1621,14 @@
 	 */
 	Owl.prototype.trigger = function(name, data, namespace) {
 		var status = {
-			item: { count: this._items.length, index: this.current() }
-		}, handler = $.camelCase(
-			$.grep([ 'on', name, namespace ], function(v) { return v })
-				.join('-').toLowerCase()
-		), event = $.Event(
-			[ name, 'owl', namespace || 'carousel' ].join('.').toLowerCase(),
-			$.extend({ relatedTarget: this }, status, data)
-		);
+				item: { count: this._items.length, index: this.current() }
+			}, handler = $.camelCase(
+				$.grep([ 'on', name, namespace ], function(v) { return v; })
+					.join('-').toLowerCase()
+			), event = $.Event(
+				[ name, 'owl', namespace || 'carousel' ].join('.').toLowerCase(),
+				$.extend({ relatedTarget: this }, status, data)
+			);
 
 		if (!this._supress[name]) {
 			$.each(this._plugins, function(name, plugin) {
@@ -1656,7 +1656,7 @@
 		$.each(events, $.proxy(function(index, event) {
 			this._supress[event] = true;
 		}, this));
-	}
+	};
 
 	/**
 	 * Releases suppressed events.
@@ -1667,7 +1667,7 @@
 		$.each(events, $.proxy(function(index, event) {
 			delete this._supress[event];
 		}, this));
-	}
+	};
 
 	/**
 	 * Checks the availability of some browser features.
@@ -1714,8 +1714,8 @@
 				};
 			}
 
-		if (event.pageX === undefined) {
-			return {
+			if (event.pageX === undefined) {
+				return {
 					x: event.clientX,
 					y: event.clientY
 				};
@@ -1813,7 +1813,7 @@
  * @author Bartosz Wojciechowski
  * @license The MIT License (MIT)
  */
-;(function($, window, document, undefined) {
+(function($, window, document, undefined) {
 
 	/**
 	 * Creates the lazy plugin.
@@ -1857,7 +1857,7 @@
 						i = ((settings.center && n * -1) || 0),
 						position = ((e.property && e.property.value) || this._core.current()) + i,
 						clones = this._core.clones().length,
-						load = $.proxy(function(i, v) { this.load(v) }, this);
+						load = $.proxy(function(i, v) { this.load(v); }, this);
 
 					while (i++ < n) {
 						this.load(clones / 2 + this._core.relative(position));
@@ -1872,7 +1872,7 @@
 
 		// register event handler
 		this._core.$element.on(this._handlers);
-	}
+	};
 
 	/**
 	 * Default options.
@@ -1880,7 +1880,7 @@
 	 */
 	Lazy.Defaults = {
 		lazyLoad: false
-	}
+	};
 
 	/**
 	 * Loads all resources of an item at the specified position.
@@ -1920,7 +1920,7 @@
 		}, this));
 
 		this._loaded.push($item.get(0));
-	}
+	};
 
 	/**
 	 * Destroys the plugin.
@@ -1935,7 +1935,7 @@
 		for (property in Object.getOwnPropertyNames(this)) {
 			typeof this[property] != 'function' && (this[property] = null);
 		}
-	}
+	};
 
 	$.fn.owlCarousel.Constructor.Plugins.Lazy = Lazy;
 
@@ -1947,7 +1947,7 @@
  * @author Bartosz Wojciechowski
  * @license The MIT License (MIT)
  */
-;(function($, window, document, undefined) {
+(function($, window, document, undefined) {
 
 	/**
 	 * Creates the auto height plugin.
@@ -2032,7 +2032,7 @@
  * @author Bartosz Wojciechowski
  * @license The MIT License (MIT)
  */
-;(function($, window, document, undefined) {
+(function($, window, document, undefined) {
 
 	/**
 	 * Creates the video plugin.
@@ -2200,7 +2200,7 @@
 		}
 
 		if (video.type === 'youtube') {
-			path = "http://img.youtube.com/vi/" + video.id + "/hqdefault.jpg";
+			path = 'http://img.youtube.com/vi/' + video.id + '/hqdefault.jpg';
 			create(path);
 		} else if (video.type === 'vimeo') {
 			$.ajax({
@@ -2327,7 +2327,7 @@
  * @author Bartosz Wojciechowski
  * @license The MIT License (MIT)
  */
-;(function($, window, document, undefined) {
+(function($, window, document, undefined) {
 
 	/**
 	 * Creates the animate plugin.
@@ -2415,7 +2415,7 @@
 			.removeClass(this.core.settings.animateIn)
 			.removeClass(this.core.settings.animateOut);
 		this.core.transitionEnd();
-	}
+	};
 
 	/**
 	 * Destroys the plugin.
@@ -2442,7 +2442,7 @@
  * @author Bartosz Wojciechowski
  * @license The MIT License (MIT)
  */
-;(function($, window, document, undefined) {
+(function($, window, document, undefined) {
 
 	/**
 	 * Creates the autoplay plugin.
@@ -2574,7 +2574,7 @@
  * @author Artus Kolanowski
  * @license The MIT License (MIT)
  */
-;(function($, window, document, undefined) {
+(function($, window, document, undefined) {
 	'use strict';
 
 	/**
@@ -2690,7 +2690,7 @@
 
 		// register event handlers
 		this.$element.on(this._handlers);
-	}
+	};
 
 	/**
 	 * Default options.
@@ -2715,7 +2715,7 @@
 		dotsSpeed: false,
 		dotsContainer: false,
 		controlsClass: 'owl-controls'
-	}
+	};
 
 	/**
 	 * Initializes the layout of the plugin and extends the carousel.
@@ -2781,7 +2781,7 @@
 		for (override in this._overrides) {
 			this._core[override] = $.proxy(this[override], this);
 		}
-	}
+	};
 
 	/**
 	 * Destroys the plugin.
@@ -2802,7 +2802,7 @@
 		for (property in Object.getOwnPropertyNames(this)) {
 			typeof this[property] != 'function' && (this[property] = null);
 		}
-	}
+	};
 
 	/**
 	 * Updates the internal state.
@@ -2834,7 +2834,7 @@
 				j += this._core.mergers(this._core.relative(i));
 			}
 		}
-	}
+	};
 
 	/**
 	 * Draws the user interface.
@@ -2875,7 +2875,7 @@
 		}
 
 		this._controls.$indicators.toggle(options.dots);
-	}
+	};
 
 	/**
 	 * Extends event data.
@@ -2891,7 +2891,7 @@
 			size: settings && (settings.center || settings.autoWidth || settings.dotData
 				? 1 : settings.dotsEach || settings.items)
 		};
-	}
+	};
 
 	/**
 	 * Gets the current page position of the carousel.
@@ -2903,7 +2903,7 @@
 		return $.grep(this._pages, function(o) {
 			return o.start <= index && o.end >= index;
 		}).pop();
-	}
+	};
 
 	/**
 	 * Gets the current succesor/predecessor position.
@@ -2925,7 +2925,7 @@
 			successor ? position += options.slideBy : position -= options.slideBy;
 		}
 		return position;
-	}
+	};
 
 	/**
 	 * Slides to the next item or page.
@@ -2934,7 +2934,7 @@
 	 */
 	Navigation.prototype.next = function(speed) {
 		$.proxy(this._overrides.to, this._core)(this.getPosition(true), speed);
-	}
+	};
 
 	/**
 	 * Slides to the previous item or page.
@@ -2943,7 +2943,7 @@
 	 */
 	Navigation.prototype.prev = function(speed) {
 		$.proxy(this._overrides.to, this._core)(this.getPosition(false), speed);
-	}
+	};
 
 	/**
 	 * Slides to the specified item or page.
@@ -2961,7 +2961,7 @@
 		} else {
 			$.proxy(this._overrides.to, this._core)(position, speed);
 		}
-	}
+	};
 
 	$.fn.owlCarousel.Constructor.Plugins.Navigation = Navigation;
 
@@ -2973,7 +2973,7 @@
  * @author Artus Kolanowski
  * @license The MIT License (MIT)
  */
-;(function($, window, document, undefined) {
+(function($, window, document, undefined) {
 	'use strict';
 
 	/**
@@ -3037,7 +3037,7 @@
 
 			this._core.to(position, false, true);
 		}, this));
-	}
+	};
 
 	/**
 	 * Default options.
@@ -3045,7 +3045,7 @@
 	 */
 	Hash.Defaults = {
 		URLhashListener: false
-	}
+	};
 
 	/**
 	 * Destroys the plugin.
@@ -3062,7 +3062,7 @@
 		for (property in Object.getOwnPropertyNames(this)) {
 			typeof this[property] != 'function' && (this[property] = null);
 		}
-	}
+	};
 
 	$.fn.owlCarousel.Constructor.Plugins.Hash = Hash;
 
