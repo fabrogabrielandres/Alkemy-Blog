@@ -1,29 +1,15 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { HomeBackoffice } from "../pages/backoffice/home";
-import { NewsForm } from "../Components/News/NewsForm";
-import { MembersForm } from "../Components/Members/MembersForm";
-import { UsersList } from "../Components/Users/UsersList";
-import { MemberList } from "../Components/Members/MembersList";
-import { UserForm } from "../Components/Users/UserForm";
-import { ActivitiesForm } from "../Components/Activities/ActivitiesForm";
 import NewsDetail from "../Components/News/Detail";
-import { SlidesList } from "../Components/Slides/SlidesList";
-import SlidesForm from "../Components/Slides/SlidesForm";
-import FormEditData from "../Components/Backoffice/Organization/edit";
-import DataOrganization from "../pages/backoffice/organization";
 import Detail from "../Components/Activities/Detail";
 import Footer from "../Components/Footer/Footer";
-import ActivitiesList from "../Components/Activities/ActivitiesList";
-import CategoriesList from "../Components/Categories/Categories";
 import { ActivitiesSection } from "../Components/Activities/ActivitiesSection";
 import Home from "../pages/Home/index";
 import About from "../Components/About";
+import BackOfficeLayout from "../Components/BackOfficeLayout";
 import DonationComponent from "../Components/Donations/Donacion";
 import ThanksComponent from "../Components/Donations/Gracias";
-import NewsList from "../Components/News/NewsList";
 import ContactPage from "../Components/Contact/ContactPage";
-import { FormCategories } from "../Components/Categories/FormCategories";
 import NewsPage from "../Components/News/NewsPage";
 import NotFound from "../Components/NotFound";
 
@@ -32,66 +18,7 @@ const Router = () => {
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/backoffice" component={HomeBackoffice} />
-        <Route
-          exact
-          path="/backoffice/activities/create"
-          component={ActivitiesForm}
-        />
-        <Route
-          exact
-          path="/backoffice/activities/edit/:id"
-          component={ActivitiesForm}
-        />
-        <Route exact path="/backoffice/activities" component={ActivitiesList} />
-        <Route
-          exact
-          path="/backoffice/organization"
-          component={DataOrganization}
-        />
-        <Route
-          exact
-          path="/backoffice/organization/edit"
-          component={FormEditData}
-        />
-        <Route exact path="/backoffice/slides" component={SlidesList} />
-        <Route exact path="/backoffice/slides/create" component={SlidesForm} />
-        <Route exact path="/backoffice/slides/:id" component={SlidesForm} />
-        <Route exact path="/backoffice/categories" component={CategoriesList} />
-        <Route
-          exact
-          path="/backoffice/categories/create"
-          component={FormCategories}
-        />
-        <Route
-          exact
-          path="/backoffice/categories/edit/:id"
-          component={FormCategories}
-        />
-        <Route exact path="/backoffice/users" component={UsersList} />
-        <Route exact path="/backoffice/users/create" component={UserForm} />
-        <Route
-          exact
-          path="/backoffice/users/:id"
-          component={(data) => <UserForm user={data} />}
-        />
-        <Route
-          exact
-          path="/backoffice/novedades/:id"
-          component={(news) => <NewsForm {...news} />}
-        />
-        <Route exact path="/backoffice/novedades/create" component={NewsForm} />
-        <Route exact path="/backoffice/members" component={MemberList} />
-        <Route
-          exact
-          path="/backoffice/members/create"
-          component={MembersForm}
-        />
-        <Route
-          exact
-          path="/backoffice/members/edit/:id"
-          component={(member) => <MembersForm {...member} />}
-        />
+        <Route path="/backoffice" component={BackOfficeLayout} />
         <Route
           exact
           path="/activities/:id"
@@ -110,7 +37,6 @@ const Router = () => {
         />
         <Route exact path="/us" component={About} />
         <Route exact path="/actividades" component={ActivitiesSection} />
-        <Route exact path="/backoffice/novedades" component={NewsList} />
         <Route
           exact
           path="/contacto"
