@@ -1,33 +1,23 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, { useEffect} from 'react';
 import { Button, FormLabel, Input, Text } from '@chakra-ui/react';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { schemaFormCreateEditCategories } from './schemaFormCreateEditCategories';
-import { peticionPostPatchFormCategories } from "./peticionPostPatchFormCategories"
-import { getCategories } from './ServicesCategories';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { createCategorie, getCategoriByid, updateCategorie } from '../../features/Categories/categoriesSlice';
 
 export const FormCategories = () => {
-   
-    const [categories, setCategories] = useState({});
-
-    const {id} = useParams();
-
-    const getCategory = useCallback( async (id) => {
-        try {
-            const res = await getCategories(id);
-            setCategories(res.data.data);
-        } catch (error) {
-            console.log(error)
-        }
-    }, [])
+    const dispatch = useDispatch()
+    const history=useHistory()
+    let {id} = useParams()
     
     useEffect(() => {
-        getCategory(id);
-    }, [getCategory, id])
-
-
+        dispatch(getCategoriByid(id))
+    }, [id,history])
+    
+    const categories= useSelector(state => state.categories.categorie)
     const initialValues = {
         "name": "",
         "description": "",
@@ -46,16 +36,22 @@ export const FormCategories = () => {
     }
     return (
         <>
-
             <Formik
                 enableReinitialize
-                initialValues={categories.id ? categories : initialValues}
+                initialValues={ categories.id ? categories : initialValues}
                 validationSchema={schemaFormCreateEditCategories}
                 onSubmit={async (values) => {
                     const img = values.image;
                     const imgbase = await convertirABase64(img);
                     values.image = imgbase;
-                    peticionPostPatchFormCategories(values);
+                    if(id){
+                        dispatch(updateCategorie(values))
+                        history.push( "/backoffice/categories/")
+                    }else{
+                        dispatch(createCategorie(values))
+                        history.push( "/backoffice/categories/")
+                    }
+                    
                 }   }
                 >
                 {(props) => (
